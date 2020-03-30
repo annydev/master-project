@@ -2,19 +2,20 @@
 
 const bodyParser = require("body-parser");
 const express = require("express");
-const ejs = require("ejs");
-//const engine = require("ejs-locals");
+const engine = require("ejs-locals");
 const moment = require('moment');
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
+const common = require("./helpers/common");
 
 const app = express();
 
-//app.engine('ejs', engine);
+app.engine('ejs', engine);
 
-app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs'); // so you can render('index')
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -95,13 +96,11 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.get("/", function (req, res) {
-  res.render("index");
+  res.render("main-page/index");
 });
 
 app.get("/login", function (req, res) {
-  res.render("login", {
-    pageTitle: "Login page"
-  });
+  res.render("login");
 });
 
 app.get("/logout", function (req, res) {
@@ -109,20 +108,14 @@ app.get("/logout", function (req, res) {
   res.redirect("/");
 });
 
-app.get("/admin", function (req, res) {
-  if (!req.isAuthenticated()) {
-    res.redirect("/login");
-  }
+app.get("/admin/dashboard", function (req, res) {
+  common.Authorize(req, res);
 
-  res.render("admin", {
-    pageTitle: "Admin"
-  });
+  res.render("dashboard/dashboard");
 });
 
 app.get("/admin/shops", async (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.redirect("/login");
-  }
+  common.Authorize(req, res);
 
   let dbShops;
 
@@ -133,17 +126,14 @@ app.get("/admin/shops", async (req, res) => {
   });
 
   let result = {
-    pageTitle: "Shops page",
     shops: dbShops
   }
 
-  res.render("shops", result);
+  res.render("shops/index", result);
 });
 
 app.get("/admin/products", async (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.redirect("/login");
-  }
+  common.Authorize(req, res);
 
   let dbProducts;
   let resultProducts = [];
@@ -200,18 +190,15 @@ app.get("/admin/products", async (req, res) => {
   }
 
   let result = {
-    pageTitle: "Products page",
     products: resultProducts
   }
-  res.render("products", result);
+  res.render("products/index", result);
 });
 
 app.get("/admin/products/edit/:id", async (req, res) => {
   var id = req.params.id;
 
-  if (!req.isAuthenticated()) {
-    res.redirect("/login");
-  }
+  common.Authorize(req, res);
 
   let dbProduct;
   let dbShops;
@@ -263,29 +250,23 @@ app.get("/admin/products/edit/:id", async (req, res) => {
   }
 
   let result = {
-    pageTitle: "Edit product page",
     product: dbProduct,
     shops: dbShops,
     prices: resultPrices
   }
 
-  res.render("editProduct", result);
+  res.render("products/edit", result);
 });
 
 app.get("/admin/addCategory", function (req, res) {
-  if (!req.isAuthenticated()) {
-    res.redirect("/login");
-  }
+  common.Authorize(req, res);
 
-  res.render("addCategory", {
-    pageTitle: "Add new category page"
-  });
+  res.render("categories/create");
 });
 
 app.get("/admin/categories", async (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.redirect("/login");
-  }
+  common.Authorize(req, res);
+
   let dbCategories;
   let resultCategories = [];
 
@@ -313,78 +294,67 @@ app.get("/admin/categories", async (req, res) => {
   }
 
   let result = {
-    pageTitle: "Categories page",
     categories: resultCategories
   }
 
-  res.render("categories", result);
+  res.render("categories/index", result);
 });
 
 app.get("/admin/categories/edit/:id", async (req, res) => {
   var id = req.params.id;
 
-  if (!req.isAuthenticated()) {
-    res.redirect("/login");
-  }
-    let dbCategory;
-    let dbSubcategories;
+  common.Authorize(req, res);
 
-    await Category.findOne({ _id: id }, function (err, category) {
-      if (!err) {
-        dbCategory = category
-      }
-    });
+  let dbCategory;
+  let dbSubcategories;
 
-    await Category.find({ parentId: id }, function (err, subcategories) {
-      if (!err) {
-        dbSubcategories = subcategories;
-      }
-    });
-
-    let result = {
-      pageTitle: "Edit category page",
-      category: dbCategory,
-      subcategories: dbSubcategories
+  await Category.findOne({ _id: id }, function (err, category) {
+    if (!err) {
+      dbCategory = category
     }
+  });
 
-    res.render("editCategory", result);
+  await Category.find({ parentId: id }, function (err, subcategories) {
+    if (!err) {
+      dbSubcategories = subcategories;
+    }
+  });
+
+  let result = {
+    category: dbCategory,
+    subcategories: dbSubcategories
+  }
+
+  res.render("categories/edit", result);
 });
 
 app.get("/admin/addShop", function (req, res) {
-  if (!req.isAuthenticated()) {
-    res.redirect("/login");
-  }
+  common.Authorize(req, res);
 
-  res.render("addShop", {
-    pageTitle: "Add new shop page"
-  });
+  res.render("shops/create");
 });
 
 app.get("/admin/shops/edit/:id", async (req, res) => {
   var id = req.params.id;
 
-  if (!req.isAuthenticated()) {
-    res.redirect("/login");
-  }
-    let dbShop;
+  common.Authorize(req, res);
 
-    await Shop.findOne({ _id: id }, function (err, shop) {
-      if (!err) {
-        dbShop = shop;
-      }
-    });
+  let dbShop;
 
-    let result = {
-      pageTitle: "Edit shop page",
-      shop: dbShop
+  await Shop.findOne({ _id: id }, function (err, shop) {
+    if (!err) {
+      dbShop = shop;
     }
-    res.render("editShop", result);
+  });
+
+  let result = {
+    shop: dbShop
+  }
+  res.render("shops/create", result);
 });
 
 app.get("/admin/users", async (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.redirect("/login");
-  }
+  common.Authorize(req, res);
 
   let dbUsers;
 
@@ -397,26 +367,19 @@ app.get("/admin/users", async (req, res) => {
   });
 
   let result = {
-    pageTitle: "Administrators page",
     administrators: dbUsers
   }
-  res.render("users", result);
+  res.render("users/index", result);
 });
 
 app.get("/admin/addAdmin", (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.redirect("/login");
-  }
+  common.Authorize(req, res);
 
-  res.render("addAdmin", {
-    pageTitle: "Add new admin"
-  });
+  res.render("users/create");
 });
 
 app.get("/admin/addProduct", async (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.redirect("/login");
-  }
+  common.Authorize(req, res);
 
   let dbCategories;
 
@@ -429,10 +392,9 @@ app.get("/admin/addProduct", async (req, res) => {
   });
 
   let result = {
-    pageTitle: "Add new products",
     categories: dbCategories
   }
-  res.render("addProduct", result);
+  res.render("products/create", result);
 });
 
 app.post("/admin/getSubcategories", async (req, res) => {
@@ -640,7 +602,7 @@ app.post("/login", function (req, res) {
       console.log(err);
     } else {
       passport.authenticate("local")(req, res, function () {
-        res.redirect("/admin");
+        res.redirect("/admin/dashboard");
       });
     }
   });

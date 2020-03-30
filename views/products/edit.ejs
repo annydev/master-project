@@ -1,0 +1,81 @@
+<% layout('../shared/layouts/admin') -%>
+<% block('title', "Edit product page") -%>
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Edit product name</h1>
+</div>
+<form class="user" action="/admin/products/edit" method="post">
+  <div class="card">
+    <div class="card-body">
+      <div class="input-group mb-3">
+        <input type="hidden" name="id" value="<%= product._id %>" id="product-id">
+        <input type="text" class="form-control editCategory" name="title" aria-label="Recipient's username"
+          aria-describedby="button-addon2" value="<%= product.title %>">
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit" id="button-addon2">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="my-4 d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Prices section</h1>
+  <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm add-price">
+    <i class=" fas fa-plus fa-sm text-white-50"></i>
+    Add new price
+  </button>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" id="price" placeholder="amount MDL" aria-label="Recipient's username"
+        aria-describedby="button-addon2">
+    </div>
+    <div class="form-group my-3">
+      <select class="custom-select" id="shop-id">
+        <option selected disabled>Choose shop</option>
+        <% shops.forEach(function(shop) { %>
+        <option value="<%= shop._id %>"><%= shop.title %></option>
+        <% }); %>
+      </select>
+    </div>
+  </div>
+</div>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Prices Table</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Price MDL</th>
+            <th>Shop name</th>
+            <th>Date</th>
+            <th style="width: 1px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% prices.forEach(function(price) { %>
+          <tr class="category">
+            <td><%= price.price %></td>
+            <td><%= price.shopTitle %></td>
+            <td><%= price.date %></td>
+            <td>
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button class="delete-price btn btn-danger btn-sm" data-id="<%= price.id %>">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

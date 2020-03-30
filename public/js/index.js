@@ -15,15 +15,15 @@ $(function () {
 
 // making post request to delete item using the id of the item from the client-side and then send this to server.
 
-$("button.delete").click(function () {
-    var data = {
-        id: this.dataset.id
-    };
+// $("button.delete").click(function () {
+//     var data = {
+//         id: this.dataset.id
+//     };
 
-    $.post("/admin/categories/delete", data, function (result) { //result came from server
-        location.reload();
-    });
-});
+//     $.post("/admin/categories/delete", data, function (result) { //result came from server
+//         location.reload();
+//     });
+// });
 
 $("button.delete-price").click(function () {
     var data = {
@@ -55,35 +55,25 @@ $("button.del").click(function () {
     });
 });
 
-$("button.add-subcategory").click(function () {
-    let data = {
-        subId: $("#subId").val(),
-        titleSubcategory: $("#titleSubcategory").val()
-    }
+// $("button.add-subcategory").click(function () {
+//     let data = {
+//         subId: $("#subId").val(),
+//         titleSubcategory: $("#titleSubcategory").val()
+//     }
 
-    $.post("/admin/categories/addSubcategory", data, function (json) {
-        location.reload();
-    });
-});
+//     $.post("/admin/categories/addSubcategory", data, function (json) {
+//         location.reload();
+//     });
+// });
 
-$("button.delete-subcategory").click(function () {
-    var data = {
-        subId: $("#subId").val()
-    }
-    $.post("/admin/categories/deleteSubcategory", data, function (json) {
-        location.reload();
-    });
-});
-
-$("button.delete-admin").click(function () {
-    var data = {
-        id: this.dataset.id
-    };
-
-    $.post("/admin/users/delete", data, function (result) {
-        location.reload();
-    });
-});
+// $("button.delete-subcategory").click(function () {
+//     var data = {
+//         subId: $("#subId").val()
+//     }
+//     $.post("/admin/categories/deleteSubcategory", data, function (json) {
+//         location.reload();
+//     });
+// });
 
 $("button.product-save").click(function () {
     let resultCategoryId;
@@ -126,26 +116,26 @@ $(".add-price").click(function() {
     });
 });
 
-$("#categoryTitle").on("change", function (e) {
-    let data = {
-        categoryId: $("#categoryTitle").val()
-    }
+// $("#categoryTitle").on("change", function (e) {
+//     let data = {
+//         categoryId: $("#categoryTitle").val()
+//     }
 
-    $.post("/admin/getSubcategories", data, function (json) {
-        $('#subcategoryTitle').html("");
+//     $.post("/admin/getSubcategories", data, function (json) {
+//         $('#subcategoryTitle').html("");
 
-        if (json.subcategories.length > 0) {
-            $('#subcategoryTitle').removeClass("d-none");
-            $('#subcategoryTitle').append("<option selected disabled>Choose subcategory</option>")
+//         if (json.subcategories.length > 0) {
+//             $('#subcategoryTitle').removeClass("d-none");
+//             $('#subcategoryTitle').append("<option selected disabled>Choose subcategory</option>")
 
-            json.subcategories.forEach(function (subcategory) {
-                $('#subcategoryTitle').append($(`<option value="${subcategory._id}">${subcategory.title}</option>`));
-            });
-        } else {
-            $('#subcategoryTitle').addClass("d-none");
-        }
-    });
-});
+//             json.subcategories.forEach(function (subcategory) {
+//                 $('#subcategoryTitle').append($(`<option value="${subcategory._id}">${subcategory.title}</option>`));
+//             });
+//         } else {
+//             $('#subcategoryTitle').addClass("d-none");
+//         }
+//     });
+// });
 
 
 // var password = document.getElementById("exampleInputPassword")

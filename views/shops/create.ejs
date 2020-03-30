@@ -1,0 +1,29 @@
+<% layout('../shared/layouts/admin') -%>
+<% block('title', "Add new shop page") -%>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Add new shop</h1>
+  </div>
+  <form class="user" action="/addShop" method="post">
+    <div class="card">
+      <div class="card-body">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="shop" placeholder="title of the shop"
+            aria-label="Recipient's username" aria-describedby="button-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit" id="button-addon2">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

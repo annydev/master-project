@@ -1,0 +1,47 @@
+<% layout('../shared/layouts/admin') -%>
+<% block('title', "Categories page") -%>
+
+<% script('../js/modules/categories-module.js') -%>
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Categories page</h1>
+  <a href="/admin/addCategory" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+      class=" fas fa-plus fa-sm text-white-50"></i> Add new</a>
+</div>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Categories Table</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th style="width: 1px;">Number of subcategories</th>
+            <th style="width: 1px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% categories.forEach(function(category) { %>
+          <tr class="category">
+            <td><%= category.title %> </td>
+            <td><%= category.subcategoriesCount %></td>
+            <td>
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <a href="/admin/categories/edit/<%= category.id %>" class="edit btn btn-success btn-sm">
+                  <i class="fas fa-edit"></i></a>
+                <button class="delete btn btn-danger btn-sm" data-id="<%= category.id %>">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

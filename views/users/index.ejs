@@ -1,0 +1,46 @@
+<% layout('../shared/layouts/admin') -%>
+<% block('title', "Administrators page") -%>
+
+<% script('../js/modules/users-module.js') -%>
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Administrators page</h1>
+    <a href="/admin/addAdmin" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class=" fas fa-plus fa-sm text-white-50"></i> 
+        <span>Add new</span>
+    </a>
+</div>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Administrators Table</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th style="width: 1px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% administrators.forEach(function(admin) { %>
+                    <tr class="category">
+                        <td><%= admin.username %> </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button class="delete-admin btn btn-danger btn-sm" data-id="<%= admin._id %>">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>   
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
