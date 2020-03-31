@@ -1,16 +1,16 @@
 
-$(function () {
-    $("#submit").click(function () {
-        var password = $("#exampleInputPassword").val();
-        var confirmPassword = $("#exampleRepeatPassword").val();
+// $(function () {
+//     $("#submit").click(function () {
+//         var password = $("#exampleInputPassword").val();
+//         var confirmPassword = $("#exampleRepeatPassword").val();
 
-        if (password != confirmPassword) {
-            alert("Passwords Don't Match");
-            return false;
-        }
-        return true;
-    });
-});
+//         if (password != confirmPassword) {
+//             alert("Passwords Don't Match");
+//             return false;
+//         }
+//         return true;
+//     });
+// });
 
 
 // making post request to delete item using the id of the item from the client-side and then send this to server.
@@ -25,35 +25,35 @@ $(function () {
 //     });
 // });
 
-$("button.delete-price").click(function () {
-    var data = {
-        id: this.dataset.id
-    };
+// $("button.delete-price").click(function () {
+//     var data = {
+//         id: this.dataset.id
+//     };
 
-    $.post("/admin/prices/delete", data, function () { //result came from server
-        location.reload();
-    });
-});
+//     $.post("/admin/prices/delete", data, function () { //result came from server
+//         location.reload();
+//     });
+// });
 
-$("button.delete-product").click(function () {
-    var data = {
-        id: this.dataset.id
-    };
+// $("button.delete-product").click(function () {
+//     var data = {
+//         id: this.dataset.id
+//     };
 
-    $.post("/admin/product/delete", data, function () { //result came from server
-        location.reload();
-    });
-});
+//     $.post("/admin/product/delete", data, function () { //result came from server
+//         location.reload();
+//     });
+// });
 
-$("button.del").click(function () {
-    var data = {
-        id: this.dataset.id
-    };
+// $("button.del").click(function () {
+//     var data = {
+//         id: this.dataset.id
+//     };
 
-    $.post("/admin/shops/delete", data, function (result) {
-        location.reload();
-    });
-});
+//     $.post("/admin/shops/delete", data, function (result) {
+//         location.reload();
+//     });
+// });
 
 // $("button.add-subcategory").click(function () {
 //     let data = {
@@ -75,46 +75,46 @@ $("button.del").click(function () {
 //     });
 // });
 
-$("button.product-save").click(function () {
-    let resultCategoryId;
-    let categoryId = $("#categoryTitle").val();
-    let subcategoryId = $("#subcategoryTitle").val();
+// $("button.product-save").click(function () {
+//     let resultCategoryId;
+//     let categoryId = $("#categoryTitle").val();
+//     let subcategoryId = $("#subcategoryTitle").val();
 
-    if (subcategoryId === null) {
-        resultCategoryId = categoryId
-    } else {
-        resultCategoryId = subcategoryId
-    }
+//     if (subcategoryId === null) {
+//         resultCategoryId = categoryId
+//     } else {
+//         resultCategoryId = subcategoryId
+//     }
 
-    var data = {
-        titleProduct: $("#product").val(),
-        productCategory: resultCategoryId,
-        productImage:$("#imageURLProduct").val()
-    }
-    $.post("/addProduct", data, function (json) {
-        console.log(json);
-        window.location.href = "/admin/products";
-    });
+//     var data = {
+//         titleProduct: $("#product").val(),
+//         productCategory: resultCategoryId,
+//         productImage:$("#imageURLProduct").val()
+//     }
+//     $.post("/addProduct", data, function (json) {
+//         console.log(json);
+//         window.location.href = "/admin/products";
+//     });
     
-});
+// });
 
-$(".add-price").click(function() {
-    function currentDate() {
-        var date = new Date();
-        return date;
-    }
-    var data = {
-        price: $("#price").val(),
-        productId: $("#product-id").val(),
-        shopId: $("#shop-id").val(),
-        date: currentDate("ru")
-    }
+// $(".add-price").click(function() {
+//     function currentDate() {
+//         var date = new Date();
+//         return date;
+//     }
+//     var data = {
+//         price: $("#price").val(),
+//         productId: $("#product-id").val(),
+//         shopId: $("#shop-id").val(),
+//         date: currentDate("ru")
+//     }
 
-    $.post("/admin/prices/add", data, function(json) {
-        console.log(json)
-        location.reload();
-    });
-});
+//     $.post("/admin/prices/add", data, function(json) {
+//         console.log(json)
+//         location.reload();
+//     });
+// });
 
 // $("#categoryTitle").on("change", function (e) {
 //     let data = {
