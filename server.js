@@ -350,7 +350,7 @@ app.get("/admin/shops/edit/:id", async (req, res) => {
   let result = {
     shop: dbShop
   }
-  res.render("shops/create", result);
+  res.render("shops/edit", result);
 });
 
 app.get("/admin/users", async (req, res) => {

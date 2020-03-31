@@ -1,16 +1,16 @@
-var UsersModule = (function() {
+var ShopsModule = (function() {
     // Preperties
 
     var self = this;
 
     // Private functions
   
-    function deleteAdmin(id) {
+    function deleteShops(id) {
         var data = {
             id: id
         };
     
-        $.post("/admin/users/delete", data, function (result) {
+        $.post("/admin/shops/delete", data, function (result) {
             location.reload();
         });
     }
@@ -18,10 +18,10 @@ var UsersModule = (function() {
     // Public functions
   
     self.Init = function() {
-        $("button.delete-admin").click((e) => { 
+        $("button.del").click((e) => { 
             let id = $(e.target).data("id");
 
-            deleteAdmin(id) 
+            deleteShops(id) 
         });
     };
 
@@ -29,5 +29,5 @@ var UsersModule = (function() {
 })();
 
 $(document).ready(function() {
-    UsersModule.Init()
+    ShopsModule.Init()
 });
