@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ShopSchema = (function () {
+const CategorySchema = (function () {
     // Preperties
 
     const self = this;
@@ -13,14 +13,15 @@ const ShopSchema = (function () {
     const defineSchema = () => {
         schema = new mongoose.Schema({
             title: {
-                type: String,
-                required: [true, "Please check your data entry, no title specified!"]
-            }
-        });
+              type: String,
+              required: [true, "Please check your data entry, no title specified!"]
+            },
+            parentId: String
+          });
     }
 
     const defineObject = () => {
-        object = mongoose.model("Shop", schema);
+        object = mongoose.model("Category", schema);
     }
 
     // Public functions
@@ -37,4 +38,4 @@ const ShopSchema = (function () {
     return self;
 })();
 
-module.exports = { ...ShopSchema }
+module.exports = { ...CategorySchema }

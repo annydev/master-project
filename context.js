@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
-const shopSchema = require("../entities/shop");
+const shopsSchema = require("./entities/shop");
+const productsSchema = require("./entities/product");
+const categoriesSchema = require("./entities/category");
+const pricesSchema = require("./entities/price");
 
 const ContextModule = (function () {
     // Preperties
@@ -23,7 +26,10 @@ const ContextModule = (function () {
     self.Init = function () {
         connectMongoose();
 
-        shopSchema.Init();
+        shopsSchema.Init();
+        productsSchema.Init();
+        categoriesSchema.Init();
+        pricesSchema.Init();
     };
 
     return self;

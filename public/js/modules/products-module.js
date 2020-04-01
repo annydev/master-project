@@ -19,7 +19,7 @@ var ProductsModule = (function() {
   
     self.Init = function() {
         $("button.delete-product").click((e) => { 
-            let id = $(e.target).data("id");
+            let id = $(e.currentTarget).data("id");
 
             deleteProduct(id) 
         });

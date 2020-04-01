@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ShopSchema = (function () {
+const PriceSchema = (function () {
     // Preperties
 
     const self = this;
@@ -12,15 +12,15 @@ const ShopSchema = (function () {
 
     const defineSchema = () => {
         schema = new mongoose.Schema({
-            title: {
-                type: String,
-                required: [true, "Please check your data entry, no title specified!"]
-            }
-        });
+            price: Number,
+            productId: String,
+            shopId: String,
+            date: Date
+          });
     }
 
     const defineObject = () => {
-        object = mongoose.model("Shop", schema);
+        object = mongoose.model("Price", schema);
     }
 
     // Public functions
@@ -37,4 +37,4 @@ const ShopSchema = (function () {
     return self;
 })();
 
-module.exports = { ...ShopSchema }
+module.exports = { ...PriceSchema }

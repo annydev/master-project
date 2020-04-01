@@ -10,7 +10,7 @@ var CategoriesModule = (function () {
             id: id
         };
 
-        $.post("/admin/categories/delete", data, function (result) { //result came from server
+        $.post("/admin/categories/delete", data, function () {
             location.reload();
         });
     }
@@ -18,8 +18,8 @@ var CategoriesModule = (function () {
     // Public functions
 
     self.Init = function (lang) {
-        $("button.delete").on("click", (e) => {
-            let id = $(e.target).data("id");
+        $("button.delete").click((e) => {
+            let id = $(e.currentTarget).data("id");
 
             deleteCategory(id);
         });

@@ -7,7 +7,7 @@ var EditCategoriesModule = (function () {
 
     function addSubcategory() {
         let data = {
-            subId: $("#subId").val(),
+            categoryId: $("#categoryId").val(),
             titleSubcategory: $("#titleSubcategory").val()
         }
 
@@ -16,10 +16,11 @@ var EditCategoriesModule = (function () {
         });
     }
 
-    function deleteSubcategory() {
+    function deleteSubcategory(id) {
         var data = {
-            subId: $("#subId").val()
+            subId: id
         }
+        
         $.post("/admin/categories/deleteSubcategory", data, function (json) {
             location.reload();
         });
@@ -54,8 +55,10 @@ var EditCategoriesModule = (function () {
             addSubcategory();
         });
 
-        $("button.delete-subcategory").click(() => {
-            deleteSubcategory();
+        $("button.delete-subcategory").click((e) => {
+            let subcategoryId = $(e.currentTarget).data("id");
+
+            deleteSubcategory(subcategoryId);
         });
 
         $("#categoryTitle").on("change", () => {

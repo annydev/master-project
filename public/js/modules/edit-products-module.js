@@ -43,7 +43,7 @@ var EditProductsModule = (function () {
         });
 
         $("button.delete-price").click((e) => { 
-            let id = $(e.target).data("id");
+            let id = $(e.currentTarget).data("id");
 
             deletePrice(id) 
         });

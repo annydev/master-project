@@ -10,7 +10,12 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const common = require("./helpers/common");
-const context = require("./repositories/context");
+const context = require("./context");
+
+const shopsRepository = require("./repositories/shops-repository");
+const productsRepository = require("./repositories/products-repository");
+const categoriesRepository = require("./repositories/categories-repository");
+const pricesRepository = require("./repositories/prices-repository");
 
 const app = express();
 
@@ -39,37 +44,10 @@ app.use(passport.session());
 
 context.Init();
 
-const categorySchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: [true, "Please check your data entry, no title specified!"]
-  },
-  parentId: String
-});
-
-const Category = mongoose.model("Category", categorySchema);
-
-const productsSchema = new mongoose.Schema({
-  title: String,
-  categoryId: String,
-  imageURL: String
-});
-
-const Product = mongoose.model("Product", productsSchema);
-
 const usersSchema = new mongoose.Schema({
   username: String,
   password: String
 });
-
-const pricesSchema = new mongoose.Schema({
-  price: Number,
-  productId: String,
-  shopId: String,
-  date: Date
-});
-
-const Price = mongoose.model("Price", pricesSchema);
 
 //This will help us to hash and salt the passwords of the users and save them into the DB.
 
@@ -104,13 +82,7 @@ app.get("/admin/dashboard", function (req, res) {
 app.get("/admin/shops", async (req, res) => {
   common.Authorize(req, res);
 
-  let dbShops;
-
-  await Shop.find({}, function (err, shops) {
-    if (!err) {
-      dbShops = shops;
-    }
-  });
+  let dbShops = await shopsRepository.GetAll();
 
   let result = {
     shops: dbShops
@@ -122,50 +94,21 @@ app.get("/admin/shops", async (req, res) => {
 app.get("/admin/products", async (req, res) => {
   common.Authorize(req, res);
 
-  let dbProducts;
+  let dbProducts = await productsRepository.GetAll();
   let resultProducts = [];
-
-  await Product.find({}, function (err, products) {
-    if (err) {
-      console.log(err);
-    } else {
-      dbProducts = products
-    }
-  });
 
   for (i = 0; i < dbProducts.length; i++) {
     let product = dbProducts[i];
     let productCategoryId = product.categoryId;
-    let dbCategory;
+    let dbCategory = await categoriesRepository.GetById(productCategoryId);
     let dbSubcategory;
-    let dbLastPrice;
-
-    await Category.findById({ _id: productCategoryId }, function (err, category) {
-      if (err) {
-        console.log(err);
-      } else {
-        dbCategory = category
-      }
-    });
 
     if (!!dbCategory.parentId) {
-      await Category.findById({ _id: dbCategory.parentId }, function (err, category) {
-        if (err) {
-          console.log(err);
-        } else {
-          dbSubcategory = dbCategory;
-          dbCategory = category
-        }
-      });
+      dbSubcategory = dbCategory;
+      dbCategory = await categoriesRepository.GetById(dbCategory.parentId);
     }
 
-    await Price.findOne({ productId: product._id }, null, { sort: { date: 'desc' } }, function (err, foundPrice) {
-      if (err) {
-        console.log(err);
-      } else {
-        dbLastPrice = foundPrice
-      }
-    });
+    let dbLastPrice = await pricesRepository.GetLastByProductId(product._id);
 
     resultProducts.push({
       id: product._id,
@@ -187,46 +130,14 @@ app.get("/admin/products/edit/:id", async (req, res) => {
 
   common.Authorize(req, res);
 
-  let dbProduct;
-  let dbShops;
-  let dbPrices;
+  let dbProduct = await productsRepository.GetById(id);
+  let dbShops = await shopsRepository.GetAll();
+  let dbPrices = await pricesRepository.GetAllByProductId(id);
   let resultPrices = [];
-
-  await Product.findById({ _id: id }, function (err, product) {
-    if (err) {
-      console.log(err);
-    } else {
-      dbProduct = product
-    }
-  });
-
-  await Shop.find({}, function (err, shops) {
-    if (err) {
-      console.log(err);
-    } else {
-      dbShops = shops
-    }
-  });
-
-  await Price.find({ productId: id }, function (err, prices) {
-    if (err) {
-      console.log(err);
-    } else {
-      dbPrices = prices
-    }
-  });
 
   for (i = 0; i < dbPrices.length; i++) {
     let price = dbPrices[i];
-    let dbShop;
-
-    await Shop.findById({ _id: price.shopId }, function (err, shop) {
-      if (err) {
-        console.log(err);
-      } else {
-        dbShop = shop;
-      }
-    });
+    let dbShop = await shopsRepository.GetById(price.shopId);
 
     resultPrices.push({
       id: price._id,
@@ -254,24 +165,12 @@ app.get("/admin/addCategory", function (req, res) {
 app.get("/admin/categories", async (req, res) => {
   common.Authorize(req, res);
 
-  let dbCategories;
+  let dbCategories = await categoriesRepository.GetAll();
   let resultCategories = [];
 
-  await Category.find({ parentId: { $exists: false } }, function (err, categories) {
-    if (!err) {
-      dbCategories = categories;
-    }
-  });
-
   for (i = 0; i < dbCategories.length; i++) {
-    let dbSubcategories;
     let currentCategory = dbCategories[i];
-
-    await Category.find({ parentId: currentCategory._id }, function (err, subcategories) {
-      if (!err) {
-        dbSubcategories = subcategories;
-      }
-    });
+    let dbSubcategories = await categoriesRepository.GetAllByParrentId(currentCategory._id);
 
     resultCategories.push({
       id: currentCategory._id,
@@ -292,20 +191,8 @@ app.get("/admin/categories/edit/:id", async (req, res) => {
 
   common.Authorize(req, res);
 
-  let dbCategory;
-  let dbSubcategories;
-
-  await Category.findOne({ _id: id }, function (err, category) {
-    if (!err) {
-      dbCategory = category
-    }
-  });
-
-  await Category.find({ parentId: id }, function (err, subcategories) {
-    if (!err) {
-      dbSubcategories = subcategories;
-    }
-  });
+  let dbCategory = await categoriesRepository.GetById(id);
+  let dbSubcategories = await categoriesRepository.GetAllByParrentId(id);
 
   let result = {
     category: dbCategory,
@@ -326,13 +213,7 @@ app.get("/admin/shops/edit/:id", async (req, res) => {
 
   common.Authorize(req, res);
 
-  let dbShop;
-
-  await Shop.findOne({ _id: id }, function (err, shop) {
-    if (!err) {
-      dbShop = shop;
-    }
-  });
+  let dbShop = await shopsRepository.GetById(id);
 
   let result = {
     shop: dbShop
@@ -368,15 +249,7 @@ app.get("/admin/addAdmin", (req, res) => {
 app.get("/admin/addProduct", async (req, res) => {
   common.Authorize(req, res);
 
-  let dbCategories;
-
-  await Category.find({ parentId: { $exists: false } }, function (err, categories) {
-    if (err) {
-      console.log(err);
-    } else {
-      dbCategories = categories
-    }
-  });
+  let dbCategories = await categoriesRepository.GetAll();
 
   let result = {
     categories: dbCategories
@@ -386,15 +259,7 @@ app.get("/admin/addProduct", async (req, res) => {
 
 app.post("/admin/getSubcategories", async (req, res) => {
   let categoryId = req.body.categoryId;
-  let dbSubcategories = [];
-
-  await Category.find({ parentId: categoryId }, function (err, subcategories) {
-    if (err) {
-      console.log(err);
-    } else {
-      dbSubcategories = subcategories;
-    }
-  });
+  let dbSubcategories = await categoriesRepository.GetAllByParrentId(categoryId);
 
   res.json({
     subcategories: dbSubcategories
@@ -402,153 +267,121 @@ app.post("/admin/getSubcategories", async (req, res) => {
 });
 
 app.post("/addProduct", async (req, res) => {
-  const newProduct = new Product({
+  let newProduct = {
     title: req.body.titleProduct,
     categoryId: req.body.productCategory,
     imageURL: req.body.productImage
-  });
+  }
 
-  await newProduct.save(function (err) {
-    if (err) {
-      res.json({ status: false, message: err });
-    } else {
-      console.log("Success!");
-      res.json({ status: true });
-    }
-  });
+  let result = await productsRepository.Create(newProduct)
+
+  res.json(result);
 });
 
-app.post("/admin/shops/edit", function (req, res) {
+app.post("/admin/shops/edit", async (req, res) => {
   var id = req.body.id;
-  var title = req.body.title;
+  var data = {
+    title: req.body.title
+  }
 
-  if (req.isAuthenticated()) {
-    Shop.findByIdAndUpdate({ _id: id }, { title: title }, { new: true }, function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.redirect("/admin/shops");
-      }
-    });
+  let result = await shopsRepository.Update(id, data);
+
+  if (result.status) {
+    res.redirect("/admin/shops");
   } else {
-    res.redirect("/login");
+    console.log(result.message);
+  }
+
+});
+
+app.post("/admin/categories/edit", async (req, res) => {
+  var id = req.body.id;
+  var data = {
+    title: req.body.title
+  }
+
+  let result = await categoriesRepository.Update(id, data);
+
+  if (result.status) {
+    res.redirect("/admin/categories");
+  } else {
+    console.log(result.message);
+  }
+  
+});
+
+app.post("/admin/products/edit", async (req, res) => {
+  var id = req.body.id;
+  var data = {
+    title: req.body.title
+  };
+
+  let result = await productsRepository.Update(id, data);
+
+  if (result.status) {
+    res.redirect("/admin/products");
+  } else {
+    console.log(result.message);
   }
 });
 
-app.post("/admin/categories/edit", function (req, res) {
-  var id = req.body.id;
-  var title = req.body.title;
-
-  if (req.isAuthenticated()) {
-    Category.findByIdAndUpdate({ _id: id }, { title: title }, { new: true }, function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.redirect("/admin/categories");
-      }
-    });
-  } else {
-    res.redirect("/login");
-  }
-});
-
-app.post("/admin/products/edit", function (req, res) {
-  var id = req.body.id;
-  var title = req.body.title;
-
-  if (req.isAuthenticated()) {
-    Product.findByIdAndUpdate({ _id: id }, { title: title }, { new: true }, function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.redirect("/admin/products");
-      }
-    });
-  } else {
-    res.redirect("/login");
-  }
-});
-
-app.post("/admin/prices/add", function (req, res) {
-  const newPrice = new Price({
+app.post("/admin/prices/add", async (req, res) => {
+  let newPrice = {
     price: req.body.price,
     productId: req.body.productId,
     shopId: req.body.shopId,
     date: req.body.date
-  });
+  };
 
-  newPrice.save(function (err) {
-    if (!err) {
-      console.log("Success!");
-      res.json({ status: true });
-    } else {
-      res.json({ status: false, message: err });
-    }
-  });
+  let result = await pricesRepository.Create(newPrice)
+
+  res.json(result);
 });
 
-app.post("/admin/categories/addSubcategory", function (req, res) {
-  const newSubcategory = new Category({
+app.post("/admin/categories/addSubcategory", async (req, res) => {
+  let newSubcategory = {
     title: req.body.titleSubcategory,
-    parentId: req.body.subId
-  });
+    parentId: req.body.categoryId
+  };
 
-  newSubcategory.save(function (err) {
-    if (!err) {
-      console.log("Success!");
-      res.json({ status: true });
-    } else {
-      res.json({ status: false, message: err });
-    }
-  });
+  let result = await categoriesRepository.Create(newSubcategory)
+
+  res.json(result);
+
 });
 
-app.post("/admin/categories/deleteSubcategory", function (req, res) {
+app.post("/admin/categories/deleteSubcategory", async (req, res) => {
   var subcategoryId = req.body.subId;
 
-  Category.findOneAndRemove({ parentId: subcategoryId }, function (err) {
-    if (err) {
-      res.json({ status: false, message: err });
-    } else {
-      res.json({ status: true });
-    };
-  });
+  let result = await categoriesRepository.Delete(subcategoryId)
+
+  res.json(result);
 });
 
-app.post("/admin/prices/delete", function (req, res) {
+app.post("/admin/prices/delete", async (req, res) => {
   let priceId = req.body.id;
 
-  Price.findOneAndRemove({ _id: priceId }, function (err) {
-    if (err) {
-      res.json({ status: false, message: err });
-    } else {
-      res.json({ status: true });
-    };
-  });
+  let result = await pricesRepository.Delete(priceId)
+
+  res.json(result);
+
 });
 
-app.post("/admin/product/delete", function (req, res) {
+app.post("/admin/product/delete", async (req, res) => {
   let productId = req.body.id;
 
-  Product.findOneAndRemove({ _id: productId }, function (err) {
-    if (err) {
-      res.json({ status: false, message: err });
-    } else {
-      res.json({ status: true });
-    };
-  });
+  let result = await productsRepository.Delete(productId)
+
+  res.json(result);
+  
 });
 
-app.post('/admin/categories/delete', function (req, res) {
+app.post('/admin/categories/delete', async (req, res) => {
   var categoryId = req.body.id;
 
-  Category.findByIdAndRemove({ _id: categoryId }, function (err) {
-    if (err) {
-      res.json({ status: false, message: err });
-    } else {
-      res.json({ status: true });
-    };
-  });
+  let result = await categoriesRepository.Delete(categoryId)
+
+  res.json(result);
 });
 
 app.post("/admin/addAdmin", function (req, res) {
@@ -595,43 +428,45 @@ app.post("/login", function (req, res) {
   });
 });
 
-app.post("/addCategory", function (req, res) {
-  const newCategory = new Category({
+app.post("/addCategory", async (req, res) => {
+  let newCategory = {
     title: req.body.category
-  });
-  newCategory.save(function (err) {
-    if (err) {
-      console.log(err)
-    } else {
-      res.redirect("/admin/categories");
-    }
-  });
+  };
+
+  let result = await categoriesRepository.Create(newCategory)
+
+  if (result.status) {
+    res.redirect("/admin/categories");
+  } else {
+    console.log(result.message);
+  }
+
 });
 
-app.post("/addShop", function (req, res) {
-  const newShop = new Shop({
+app.post("/addShop", async (req, res) => {
+  let newShop = {
     title: req.body.shop
-  });
-  newShop.save(function (err) {
-    if (err) {
-      console.log(err)
-    } else {
-      res.redirect("/admin/shops");
+  };
 
-    }
-  })
+  let result = await shopsRepository.Create(newShop)
+
+  res.json(result);
+
+  if (result.status) {
+    res.redirect("/admin/shops");
+  } else {
+    console.log(result.message);
+  }
+
 });
 
-app.post("/admin/shops/delete", function (req, res) {
+app.post("/admin/shops/delete", async (req, res) => {
   var shopId = req.body.id;
 
-  Shop.remove({ _id: shopId }, function (err) {
-    if (err) {
-      res.json({ status: false, message: err });
-    } else {
-      res.json({ status: true });
-    };
-  });
+  let result = await shopsRepository.Delete(shopId)
+
+  res.json(result);
+
 });
 
 app.listen(3000, function () {
