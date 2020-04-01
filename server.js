@@ -8,7 +8,9 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
+
 const common = require("./helpers/common");
+const context = require("./repositories/context");
 
 const app = express();
 
@@ -35,22 +37,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb://localhost:27017/pricesDB", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false
-});
-
-mongoose.set("useCreateIndex", true);
-
-const shopsSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: [true, "Please check your data entry, no title specified!"]
-  }
-});
-
-const Shop = mongoose.model("Shop", shopsSchema);
+context.Init();
 
 const categorySchema = new mongoose.Schema({
   title: {

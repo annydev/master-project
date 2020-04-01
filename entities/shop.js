@@ -10,22 +10,30 @@ const ShopSchema = (function () {
 
     // Private functions
 
-    const connectMongoose = () => {
-
-    }
-
-    // Public functions
-
-    self.Init = function () {
+    const defineSchema = () => {
         shopsSchema = new mongoose.Schema({
             title: {
                 type: String,
                 required: [true, "Please check your data entry, no title specified!"]
             }
         });
+    }
 
+    const defineObject = () => {
         shopObject = mongoose.model("Shop", shopsSchema);
+
+    }
+
+    // Public functions
+
+    self.Init = () => {
+        defineSchema();
+        defineObject();
     };
+
+    self.Entity = () => {
+        return shopObject;
+    }
 
     return self;
 })();

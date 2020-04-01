@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const shopSchema = require("../entities/shop");
 
 const ContextModule = (function () {
     // Preperties
@@ -21,6 +22,8 @@ const ContextModule = (function () {
 
     self.Init = function () {
         connectMongoose();
+
+        shopSchema.Init();
     };
 
     return self;
