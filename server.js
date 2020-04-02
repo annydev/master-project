@@ -4,13 +4,10 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const engine = require("ejs-locals");
 const moment = require('moment');
-const mongoose = require("mongoose");
-const session = require("express-session");
-const passport = require("passport");
-const passportLocalMongoose = require("passport-local-mongoose");
 
 const common = require("./helpers/common");
 const context = require("./context");
+const operator = require("./operator");
 
 const shopsRepository = require("./repositories/shops-repository");
 const productsRepository = require("./repositories/products-repository");
@@ -22,43 +19,13 @@ const app = express();
 app.engine('ejs', engine);
 
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs'); // so you can render('index')
+app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-//We are telling to the app to use session
-
-app.use(session({
-  secret: "our secret.",
-  resave: false,
-  saveUninitialized: false
-}));
-
-//  Initialize passport and set to the passport to use session
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 context.Init();
-
-const usersSchema = new mongoose.Schema({
-  username: String,
-  password: String
-});
-
-//This will help us to hash and salt the passwords of the users and save them into the DB.
-
-usersSchema.plugin(passportLocalMongoose);
-
-const User = mongoose.model("User", usersSchema);
-
-passport.use(User.createStrategy());
-
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+operator.Init(app);
 
 app.get("/", function (req, res) {
   res.render("main-page/index");
@@ -77,18 +44,6 @@ app.get("/admin/dashboard", function (req, res) {
   common.Authorize(req, res);
 
   res.render("dashboard/dashboard");
-});
-
-app.get("/admin/shops", async (req, res) => {
-  common.Authorize(req, res);
-
-  let dbShops = await shopsRepository.GetAll();
-
-  let result = {
-    shops: dbShops
-  }
-
-  res.render("shops/index", result);
 });
 
 app.get("/admin/products", async (req, res) => {
@@ -202,25 +157,6 @@ app.get("/admin/categories/edit/:id", async (req, res) => {
   res.render("categories/edit", result);
 });
 
-app.get("/admin/addShop", function (req, res) {
-  common.Authorize(req, res);
-
-  res.render("shops/create");
-});
-
-app.get("/admin/shops/edit/:id", async (req, res) => {
-  var id = req.params.id;
-
-  common.Authorize(req, res);
-
-  let dbShop = await shopsRepository.GetById(id);
-
-  let result = {
-    shop: dbShop
-  }
-  res.render("shops/edit", result);
-});
-
 app.get("/admin/users", async (req, res) => {
   common.Authorize(req, res);
 
@@ -278,22 +214,6 @@ app.post("/addProduct", async (req, res) => {
   res.json(result);
 });
 
-app.post("/admin/shops/edit", async (req, res) => {
-  var id = req.body.id;
-  var data = {
-    title: req.body.title
-  }
-
-  let result = await shopsRepository.Update(id, data);
-
-  if (result.status) {
-    res.redirect("/admin/shops");
-  } else {
-    console.log(result.message);
-  }
-
-});
-
 app.post("/admin/categories/edit", async (req, res) => {
   var id = req.body.id;
   var data = {
@@ -307,7 +227,7 @@ app.post("/admin/categories/edit", async (req, res) => {
   } else {
     console.log(result.message);
   }
-  
+
 });
 
 app.post("/admin/products/edit", async (req, res) => {
@@ -373,7 +293,7 @@ app.post("/admin/product/delete", async (req, res) => {
   let result = await productsRepository.Delete(productId)
 
   res.json(result);
-  
+
 });
 
 app.post('/admin/categories/delete', async (req, res) => {
@@ -418,13 +338,10 @@ app.post("/login", function (req, res) {
   });
   //login function came from passport package
   req.login(user, function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      passport.authenticate("local")(req, res, function () {
-        res.redirect("/admin/dashboard");
-      });
-    }
+    if (err)
+      return console.log(err);
+
+    return res.redirect("/admin/dashboard");
   });
 });
 
@@ -440,30 +357,6 @@ app.post("/addCategory", async (req, res) => {
   } else {
     console.log(result.message);
   }
-
-});
-
-app.post("/addShop", async (req, res) => {
-  let newShop = {
-    title: req.body.shop
-  };
-
-  let result = await shopsRepository.Create(newShop)
-
-  if (result.status) {
-    res.redirect("/admin/shops");
-  } else {
-    console.log(result.message);
-  }
-
-});
-
-app.post("/admin/shops/delete", async (req, res) => {
-  var shopId = req.body.id;
-
-  let result = await shopsRepository.Delete(shopId)
-
-  res.json(result);
 
 });
 

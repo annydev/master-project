@@ -3,6 +3,7 @@ const shopsSchema = require("./entities/shop");
 const productsSchema = require("./entities/product");
 const categoriesSchema = require("./entities/category");
 const pricesSchema = require("./entities/price");
+const usersSchema = require("./entities/user");
 
 const ContextModule = (function () {
     // Preperties
@@ -30,6 +31,7 @@ const ContextModule = (function () {
         productsSchema.Init();
         categoriesSchema.Init();
         pricesSchema.Init();
+        usersSchema.Init();
     };
 
     return self;
