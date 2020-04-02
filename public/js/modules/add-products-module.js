@@ -28,12 +28,37 @@ var AddProductsModule = (function () {
 
     }
 
+    function createOptionSelectForSubcategories() {
+        let data = {
+            categoryId: $("#categoryTitle").val()
+        }
+    
+        $.post("/admin/getSubcategories", data, function (json) {
+            $('#subcategoryTitle').html("");
+    
+            if (json.subcategories.length > 0) {
+                $('#subcategoryTitle').removeClass("d-none");
+                $('#subcategoryTitle').append("<option selected disabled>Choose subcategory</option>")
+    
+                json.subcategories.forEach(function (subcategory) {
+                    $('#subcategoryTitle').append($(`<option value="${subcategory._id}">${subcategory.title}</option>`));
+                });
+            } else {
+                $('#subcategoryTitle').addClass("d-none");
+            }
+        });
+    }
+
     // Public functions
 
     self.Init = function () {
         $("button.product-save").click(() => {
 
             addProduct()
+        });
+
+        $("#categoryTitle").on("change", () => {
+            createOptionSelectForSubcategories();
         });
     };
 

@@ -6,81 +6,71 @@ const ShopsRepository = (function () {
     const self = this;
 
     // Private functions
+
+    const getResult = (err) => {
+        if (err) {
+            return { status: false, message: err };
+        } else {
+            return { status: true };
+        }
+    }
+
     // Public functions
 
-    self.GetAll = async () => {
-        let dbShops;
-        let shopsSet = Shop.GetSet();
+    self.GetAll = () => {
+        return new Promise((resolve) => {
+            let shopsSet = Shop.GetSet();
 
-        await shopsSet.find({}, function (err, shops) {
-            if (!err) {
-                dbShops = shops;
-            }
+            shopsSet.find({}, function (err, shops) {
+                if (!err) {
+                    resolve(shops)
+                }
+            });
         });
-
-        return dbShops;
     };
 
-    self.GetById = async (id) => {
-        let dbShop;
-        let shopsSet = Shop.GetSet();
+    self.GetById = (id) => {
+        return new Promise((resolve) => {
+            let shopsSet = Shop.GetSet();
 
-        await shopsSet.findById({ _id: id }, function (err, shop) {
-            if (err) {
-                console.log(err);
-            } else {
-                dbShop = shop;
-            }
+            shopsSet.findById({ _id: id }, function (err, shop) {
+                if (!err) {
+                    resolve(shop)
+                }
+            });
         });
-
-        return dbShop;
     }
 
-    self.Create = async (data) => {
-        let result;
-        let dbSet = Shop.GetSet();
+    self.Create = (data) => {
+        return new Promise((resolve) => {
+            let dbSet = Shop.GetSet();
 
-        const newShop = new dbSet(data);
+            const newShop = new dbSet(data);
 
-        await newShop.save(function (err) {
-            if (err) {
-                result = { status: false, message: err };
-            } else {
-                result = { status: true };
-            }
+            newShop.save(function (err) {
+                resolve(getResult(err))
+            });
         });
-
-        return result;
     }
 
-    self.Update = async () => {
-        let result;
-        let dbSet = Shop.GetSet();
+    self.Update = (id, data) => {
+        return new Promise((resolve) => {
+            let dbSet = Shop.GetSet();
 
-        dbSet.findByIdAndUpdate({ _id: id }, data, { new: true }, function (err) {
-            if (err) {
-                result = { status: false, message: err };
-            } else {
-                result = { status: true };
-            }
+            dbSet.findByIdAndUpdate({ _id: id }, data, { new: true }, function (err) {
+                resolve(getResult(err))
+            });
         });
-
-        return result;
     }
 
-    self.Delete = async (id) => {
-        let result;
-        let dbSet = Shop.GetSet();
+    self.Delete = (id) => {
+        return new Promise((resolve) => {
+            let dbSet = Shop.GetSet();
 
-        dbSet.findOneAndRemove({ _id: id }, function (err) {
-            if (err) {
-                result = { status: false, message: err };
-            } else {
-                result = { status: true };
-            };
+            dbSet.findOneAndRemove({ _id: id }, function (err) {
+                resolve(getResult(err))
+            });
         });
-
-        return result;
     }
 
     return self;

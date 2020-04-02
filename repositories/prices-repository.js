@@ -6,68 +6,61 @@ const PricesRepository = (function () {
     const self = this;
 
     // Private functions
+
+    const getResult = (err) => {
+        if (err) {
+            return { status: false, message: err };
+        } else {
+            return { status: true };
+        }
+    }
+
     // Public functions
 
-    self.GetLastByProductId = async (id) => {
-        let dbPrice;
-        let dbSet = Price.GetSet();
+    self.GetLastByProductId = (id) => {
+        return new Promise ((resolve) => {
+            let dbSet = Price.GetSet();
 
-        await dbSet.findOne({ productId: id }, null, { sort: { date: 'desc' } }, function (err, foundPrice) {
-            if (err) {
-                console.log(err);
-            } else {
-                dbPrice = foundPrice
-            }
-        });
-
-        return dbPrice;
+             dbSet.findOne({ productId: id }, null, { sort: { date: 'desc' } }, function (err, foundPrice) {
+                if (!err) {
+                    resolve(foundPrice)
+                }
+            });
+        });     
     };
 
-    self.GetAllByProductId = async (id) => {
-        let dbPrices;
-        let dbSet = Price.GetSet();
+    self.GetAllByProductId = (id) => {
+        return new Promise ((resolve) => {
+            let dbSet = Price.GetSet();
 
-        await dbSet.find({ productId: id }, function (err, prices) {
-            if (err) {
-                console.log(err);
-            } else {
-                dbPrices = prices
-            }
+            dbSet.find({ productId: id }, function (err, prices) {
+                if (!err) {
+                    resolve(prices)
+                } 
+            });
         });
-
-        return dbPrices;
     }
 
-    self.Create = async (data) => {
-        let result;
-        let dbSet = Price.GetSet();
+    self.Create = (data) => {
+        return new Promise((resolve) => {
+            let dbSet = Price.GetSet();
 
-        const newPrice = new dbSet(data);
+            const newPrice = new dbSet(data);
 
-        await newPrice.save(function (err) {
-            if (err) {
-                result = { status: false, message: err };
-            } else {
-                result = { status: true };
-            }
-        });
-
-        return result;
+            newPrice.save(function (err) {
+                resolve(getResult(err));
+            });
+        })
     }
 
-    self.Delete = async (id) => {
-        let result;
-        let dbSet = Price.GetSet();
+    self.Delete = (id) => {
+        return new Promise ((resolve) => {
+            let dbSet = Price.GetSet();
 
-        dbSet.findOneAndRemove({ _id: id }, function (err) {
-            if (err) {
-                result = { status: false, message: err };
-            } else {
-                result = { status: true };
-            };
+            dbSet.findOneAndRemove({ _id: id }, function (err) {
+                resolve(getResult(err));
+            });
         });
-
-        return result;
     }
 
     return self;

@@ -450,8 +450,6 @@ app.post("/addShop", async (req, res) => {
 
   let result = await shopsRepository.Create(newShop)
 
-  res.json(result);
-
   if (result.status) {
     res.redirect("/admin/shops");
   } else {

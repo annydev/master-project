@@ -6,83 +6,70 @@ const ProductsRepository = (function () {
     const self = this;
 
     // Private functions
+
+    const getResult = (err) => {
+        if (err) {
+            return { status: false, message: err };
+        } else {
+            return { status: true };
+        }
+    }
+
     // Public functions
 
-    self.GetAll = async () => {
-        let dbProducts;
-        let dbSet = Product.GetSet();
+    self.GetAll = () => {
+        return new Promise ((resolve) => {
+            let dbSet = Product.GetSet();
 
-        await dbSet.find({}, function (err, products) {
-            if (err) {
-                console.log(err);
-            } else {
-                dbProducts = products
-            }
-        });
-
-        return dbProducts;
+             dbSet.find({}, function (err, products) {
+                if (!err) {
+                    resolve(products)
+                } 
+            });
+        });    
     };
 
-    self.GetById = async (id) => {
-        let dbProduct;
-        let dbSet = Product.GetSet();
+    self.GetById = (id) => {
+        return new Promise ((resolve) => {
+            let dbSet = Product.GetSet();
 
-        await dbSet.findById({ _id: id }, function (err, product) {
-            if (err) {
-                console.log(err);
-            } else {
-                dbProduct = product
-            }
-        });
-
-        return dbProduct;
+             dbSet.findById({ _id: id }, function (err, product) {
+                if (!err) {
+                   resolve(product)
+                } 
+            });
+        });   
     }
 
-    self.Create = async (data) => {
-        let result;
-        let dbSet = Product.GetSet();
+    self.Create = (data) => {
+        return new Promise ((resolve) => {
+            let dbSet = Product.GetSet();
+            const newProduct = new dbSet(data);
 
-        const newProduct = new dbSet(data);
-
-        await newProduct.save(function (err) {
-            if (err) {
-                result = { status: false, message: err };
-            } else {
-                result = { status: true };
-            }
+            newProduct.save(function (err) {
+               resolve(getResult(err))
+            });
         });
-
-        return result;
     }
 
-    self.Update = async (id, data) => {
-        let result;
-        let dbSet = Product.GetSet();
+    self.Update = (id, data) => {
+        return new Promise ((resolve) => {
+            let dbSet = Product.GetSet();
 
-        dbSet.findByIdAndUpdate({ _id: id }, data, { new: true }, function (err) {
-            if (err) {
-                result = { status: false, message: err };
-            } else {
-                result = { status: true };
-            }
+            dbSet.findByIdAndUpdate({ _id: id }, data, { new: true }, function (err) {
+               resolve(getResult(err))
+            });
         });
-
-        return result;
     }
 
-    self.Delete = async (id) => {
-        let result;
-        let dbSet = Product.GetSet();
+    self.Delete = (id) => {
+        return new Promise ((resolve) => {
+            let dbSet = Product.GetSet();
 
-        dbSet.findOneAndRemove({ _id: id }, function (err) {
-            if (err) {
-                result = { status: false, message: err };
-            } else {
-                result = { status: true };
-            };
+            dbSet.findOneAndRemove({ _id: id }, function (err) {
+               resolve(getResult(err))
+            });
         });
-
-        return result;
     }
 
     return self;

@@ -26,7 +26,7 @@ const CategoriesRepository = (function () {
                     resolve(category)
                 }
             });
-        })
+        });
     };
 
     self.GetAll = () => {
@@ -50,17 +50,17 @@ const CategoriesRepository = (function () {
                     resolve(subcategories);
                 }
             });
-        })
+        });
     };
 
-    self.Update = () => {
+    self.Update = (id, data) => {
         return new Promise((resolve) => {
             let dbSet = Category.GetSet();
 
             dbSet.findByIdAndUpdate({ _id: id }, data, { new: true }, function (err) {
                 resolve(getResult(err));
             });
-        })
+        });
     }
 
     self.Create = (data) => {
@@ -72,7 +72,7 @@ const CategoriesRepository = (function () {
             newCategory.save(function (err) {
                 resolve(getResult(err));
             });
-        })
+        });
     }
 
     self.Delete = (id) => {
@@ -81,8 +81,8 @@ const CategoriesRepository = (function () {
 
             dbSet.findOneAndRemove({ _id: id }, function (err) {
                 resolve(getResult(err));
-            })
-        })
+            });
+        });
     }
 
     return self;
