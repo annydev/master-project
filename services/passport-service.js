@@ -18,11 +18,9 @@ const PassportService = (function () {
     }
 
     const prepareUser = () => {
-        let dbSet = User.GetSet();
-
-        passport.use(dbSet.createStrategy());
-        passport.serializeUser(dbSet.serializeUser());
-        passport.deserializeUser(dbSet.deserializeUser());
+        passport.use(User.createStrategy());
+        passport.serializeUser(User.serializeUser());
+        passport.deserializeUser(User.deserializeUser());
     }
 
     const initializeSession = () => {

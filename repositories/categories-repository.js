@@ -19,9 +19,7 @@ const CategoriesRepository = (function () {
 
     self.GetById = (categoryId) => {
         return new Promise((resolve) => {
-            let dbSet = Category.GetSet();
-
-            dbSet.findById({ _id: categoryId }, function (err, category) {
+            Category.findById({ _id: categoryId }, function (err, category) {
                 if (!err) {
                     resolve(category)
                 }
@@ -31,9 +29,7 @@ const CategoriesRepository = (function () {
 
     self.GetAll = () => {
         return new Promise((resolve) => {
-            let dbSet = Category.GetSet();
-
-            dbSet.find({ parentId: { $exists: false } }, function (err, categories) {
+            Category.find({ parentId: { $exists: false } }, function (err, categories) {
                 if (!err) {
                     resolve(categories);
                 }
@@ -43,9 +39,7 @@ const CategoriesRepository = (function () {
 
     self.GetAllByParrentId = (parrentId) => {
         return new Promise((resolve) => {
-            let dbSet = Category.GetSet();
-
-            dbSet.find({ parentId: parrentId }, function (err, subcategories) {
+            Category.find({ parentId: parrentId }, function (err, subcategories) {
                 if (!err) {
                     resolve(subcategories);
                 }
@@ -55,9 +49,7 @@ const CategoriesRepository = (function () {
 
     self.Update = (id, data) => {
         return new Promise((resolve) => {
-            let dbSet = Category.GetSet();
-
-            dbSet.findByIdAndUpdate({ _id: id }, data, { new: true }, function (err) {
+            Category.findByIdAndUpdate({ _id: id }, data, { new: true }, function (err) {
                 resolve(getResult(err));
             });
         });
@@ -65,9 +57,7 @@ const CategoriesRepository = (function () {
 
     self.Create = (data) => {
         return new Promise((resolve) => {
-            let dbSet = Category.GetSet();
-
-            const newCategory = new dbSet(data);
+            const newCategory = new Category(data);
 
             newCategory.save(function (err) {
                 resolve(getResult(err));
@@ -77,9 +67,7 @@ const CategoriesRepository = (function () {
 
     self.Delete = (id) => {
         return new Promise((resolve) => {
-            let dbSet = Category.GetSet();
-
-            dbSet.findOneAndRemove({ _id: id }, function (err) {
+            Category.findOneAndRemove({ _id: id }, function (err) {
                 resolve(getResult(err));
             });
         });

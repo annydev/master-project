@@ -19,9 +19,7 @@ const ShopsRepository = (function () {
 
     self.GetAll = () => {
         return new Promise((resolve) => {
-            let shopsSet = Shop.GetSet();
-
-            shopsSet.find({}, function (err, shops) {
+            Shop.find({}, function (err, shops) {
                 if (!err) {
                     resolve(shops)
                 }
@@ -31,9 +29,7 @@ const ShopsRepository = (function () {
 
     self.GetById = (id) => {
         return new Promise((resolve) => {
-            let shopsSet = Shop.GetSet();
-
-            shopsSet.findById({ _id: id }, function (err, shop) {
+            Shop.findById({ _id: id }, function (err, shop) {
                 if (!err) {
                     resolve(shop)
                 }
@@ -43,9 +39,7 @@ const ShopsRepository = (function () {
 
     self.Create = (data) => {
         return new Promise((resolve) => {
-            let dbSet = Shop.GetSet();
-
-            const newShop = new dbSet(data);
+            const newShop = new Shop(data);
 
             newShop.save(function (err) {
                 resolve(getResult(err))
@@ -55,9 +49,7 @@ const ShopsRepository = (function () {
 
     self.Update = (id, data) => {
         return new Promise((resolve) => {
-            let dbSet = Shop.GetSet();
-
-            dbSet.findByIdAndUpdate({ _id: id }, data, { new: true }, function (err) {
+            Shop.findByIdAndUpdate({ _id: id }, data, { new: true }, function (err) {
                 resolve(getResult(err))
             });
         });
@@ -65,9 +57,7 @@ const ShopsRepository = (function () {
 
     self.Delete = (id) => {
         return new Promise((resolve) => {
-            let dbSet = Shop.GetSet();
-
-            dbSet.findOneAndRemove({ _id: id }, function (err) {
+            Shop.findOneAndRemove({ _id: id }, function (err) {
                 resolve(getResult(err))
             });
         });

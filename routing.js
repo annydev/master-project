@@ -1,5 +1,3 @@
-const common = require("./helpers/common");
-
 const passportService = require("./services/passport-service");
 const shopsController = require("./controllers/shops-controller");
 const categoriesController = require("./controllers/categories-controller");
@@ -7,8 +5,10 @@ const productsController = require("./controllers/products-controller");
 const pricesController = require("./controllers/prices-controller");
 const usersController = require("./controllers/users-controller");
 const loginController = require("./controllers/login-controller");
+const MainPageController = require("./controllers/main-page-controller");
+const AdminDashboardController = require("./controllers/admin-dashboard-controller");
 
-const OperatorModule = (function () {
+const RoutingModule = (function () {
     // Properties
 
     const self = this;
@@ -18,15 +18,17 @@ const OperatorModule = (function () {
     self.Init = function (app) {
         passportService.Init(app);
 
-        common.DefineActions(app, "/admin/shops", shopsController.GetActions());
-        common.DefineActions(app, "/admin/categories", categoriesController.GetActions());
-        common.DefineActions(app, "/admin/products", productsController.GetActions());
-        common.DefineActions(app, "/admin/prices", pricesController.GetActions());
-        common.DefineActions(app, "/admin/users", usersController.GetActions());
-        common.DefineActions(app, "/login", loginController.GetActions());
+        app.use('/admin/categories', categoriesController);
+        app.use('/auth', loginController);
+        app.use("/admin/shops", shopsController);
+        app.use("/admin/products", productsController);
+        app.use("/admin/prices", pricesController);
+        app.use("/admin/users", usersController);
+        app.use("/", MainPageController);
+        app.use("/admin", AdminDashboardController);
     };
 
     return self;
 })();
 
-module.exports = { ...OperatorModule }
+module.exports = { ...RoutingModule }

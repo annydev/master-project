@@ -19,9 +19,7 @@ const UsersRepository = (function () {
 
     self.GetAll = () => {
         return new Promise((resolve) => {
-            let dbSet = User.GetSet();
-
-            dbSet.find({}, function (err, users) {
+            User.find({}, function (err, users) {
                 if (!err) {
                     resolve(users);
                 }
@@ -31,9 +29,7 @@ const UsersRepository = (function () {
 
     self.Register = (username, password) => {
         return new Promise((resolve) => {
-            let dbSet = User.GetSet();
-
-            dbSet.register({username}, password, function (err) {
+            User.register({username}, password, function (err) {
                 if(!err) {
                     resolve(getResult(err))
                 }
@@ -42,9 +38,7 @@ const UsersRepository = (function () {
     }
 
     self.GetNew =  (username, password) => {
-        let dbSet = User.GetSet();
-
-        return new dbSet({
+        return new User({
             username: username,
             password: password
         });
@@ -52,9 +46,7 @@ const UsersRepository = (function () {
 
     self.Delete = (id) => {
         return new Promise((resolve) => {
-            let dbSet = User.GetSet();
-
-            dbSet.findByIdAndRemove({ _id: id }, function (err) {
+           User.findByIdAndRemove({ _id: id }, function (err) {
                 resolve(getResult(err));
             });
         });

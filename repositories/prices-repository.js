@@ -19,9 +19,7 @@ const PricesRepository = (function () {
 
     self.GetLastByProductId = (id) => {
         return new Promise ((resolve) => {
-            let dbSet = Price.GetSet();
-
-             dbSet.findOne({ productId: id }, null, { sort: { date: 'desc' } }, function (err, foundPrice) {
+             Price.findOne({ productId: id }, null, { sort: { date: 'desc' } }, function (err, foundPrice) {
                 if (!err) {
                     resolve(foundPrice)
                 }
@@ -31,9 +29,7 @@ const PricesRepository = (function () {
 
     self.GetAllByProductId = (id) => {
         return new Promise ((resolve) => {
-            let dbSet = Price.GetSet();
-
-            dbSet.find({ productId: id }, function (err, prices) {
+            Price.find({ productId: id }, function (err, prices) {
                 if (!err) {
                     resolve(prices)
                 } 
@@ -43,9 +39,7 @@ const PricesRepository = (function () {
 
     self.Create = (data) => {
         return new Promise((resolve) => {
-            let dbSet = Price.GetSet();
-
-            const newPrice = new dbSet(data);
+            const newPrice = new Price(data);
 
             newPrice.save(function (err) {
                 resolve(getResult(err));
@@ -55,9 +49,7 @@ const PricesRepository = (function () {
 
     self.Delete = (id) => {
         return new Promise ((resolve) => {
-            let dbSet = Price.GetSet();
-
-            dbSet.findOneAndRemove({ _id: id }, function (err) {
+            Price.findOneAndRemove({ _id: id }, function (err) {
                 resolve(getResult(err));
             });
         });

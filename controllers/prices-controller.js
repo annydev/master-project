@@ -1,42 +1,27 @@
+const express = require('express');
+const router = express.Router();
+
 const pricesRepository = require("../repositories/prices-repository");
 
-const PricesController = (function () {
-    // Preperties
+router.post("/add", async (req, res) => {
+    let newPrice = {
+        price: req.body.price,
+        productId: req.body.productId,
+        shopId: req.body.shopId,
+        date: req.body.date
+    };
 
-    const self = this;
-    const actions = []
+    let result = await pricesRepository.Create(newPrice)
 
-    // Actions
+    res.json(result);
+});
 
-    actions.push(["POST", "add", async (req, res) => {
-        let newPrice = {
-            price: req.body.price,
-            productId: req.body.productId,
-            shopId: req.body.shopId,
-            date: req.body.date
-        };
+router.post("/delete", async (req, res) => {
+    let priceId = req.body.id;
 
-        let result = await pricesRepository.Create(newPrice)
+    let result = await pricesRepository.Delete(priceId)
 
-        res.json(result);
-    }]);
+    res.json(result);
+});
 
-    actions.push(["POST", "delete", async (req, res) => {
-        let priceId = req.body.id;
-
-        let result = await pricesRepository.Delete(priceId)
-
-        res.json(result);
-    }]);
-
-    // Public functions
-
-    self.GetActions = () => {
-        return actions;
-
-    }
-
-    return self;
-})();
-
-module.exports = { ...PricesController }
+module.exports = router;

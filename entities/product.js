@@ -1,39 +1,11 @@
 const mongoose = require("mongoose");
 
-const ProductSchema = (function () {
-    // Preperties
+    let schema = new mongoose.Schema({
+        title: String,
+        categoryId: String,
+        imageURL: String
+    });
 
-    const self = this;
+    let object = mongoose.model("Product", schema);
 
-    let schema;
-    let object;
-
-    // Private functions
-
-    const defineSchema = () => {
-        schema = new mongoose.Schema({
-            title: String,
-            categoryId: String,
-            imageURL: String
-        });
-    }
-
-    const defineObject = () => {
-        object = mongoose.model("Product", schema);
-    }
-
-    // Public functions
-
-    self.Init = () => {
-        defineSchema();
-        defineObject();
-    };
-
-    self.GetSet = () => {
-        return object;
-    }
-
-    return self;
-})();
-
-module.exports = { ...ProductSchema }
+module.exports = object;

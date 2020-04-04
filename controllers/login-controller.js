@@ -1,36 +1,26 @@
+const express = require('express');
+const router = express.Router();
+
 const usersRepository = require("../repositories/users-repository");
 
-const LoginController = (function () {
-    // Preperties
+router.get("/login", async (req, res) => {
+    res.render("login");
+});
 
-    const self = this;
-    const actions = []
+router.get("/logout", async (req, res) => {
+    req.logout();
+    res.redirect("/");
+});
 
-    // Actions
+router.post("/login", async (req, res) => {
+    let user = usersRepository.GetNew(req.body.username, req.body.password);
 
-    actions.push(["GET", "", async (req, res) => {
-        res.render("login");
-    }]);
+    req.login(user, function (err) {
+        if (!err) {
+            res.redirect("/admin/dashboard");
+        }
+    });
 
-    actions.push(["POST", "", async (req, res) => {
-        let user = usersRepository.GetNew(req.body.username, req.body.password);
+});
 
-        req.login(user, function (err) {
-            if (!err) {
-                res.redirect("/admin/dashboard");
-            }
-        });
-
-    }]);
-
-    // Public functions
-
-    self.GetActions = () => {
-        return actions;
-
-    }
-
-    return self;
-})();
-
-module.exports = { ...LoginController }
+module.exports = router;
