@@ -21,7 +21,7 @@ var AddProductsModule = (function () {
             productCategory: resultCategoryId,
             productImage: $("#imageURLProduct").val()
         }
-        $.post("/addProduct", data, function (json) {
+        $.post("add", data, function (json) {
             console.log(json);
             window.location.href = "/admin/products";
         });
@@ -33,7 +33,7 @@ var AddProductsModule = (function () {
             categoryId: $("#categoryTitle").val()
         }
     
-        $.post("/admin/getSubcategories", data, function (json) {
+        $.post("getSubcategories", data, function (json) {
             $('#subcategoryTitle').html("");
     
             if (json.subcategories.length > 0) {

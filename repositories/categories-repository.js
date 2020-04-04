@@ -38,7 +38,7 @@ const CategoriesRepository = (function () {
                     resolve(categories);
                 }
             });
-        })
+        });
     };
 
     self.GetAllByParrentId = (parrentId) => {

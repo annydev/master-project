@@ -34,6 +34,12 @@ const ShopsController = (function () {
         res.render("shops/edit", result);
     }]);
 
+    actions.push(["GET", "add", async (req, res) => {
+        common.Authorize(req, res);
+
+        res.render("shops/create");
+    }]);
+
     actions.push(["POST", "edit", async (req, res) => {
         var id = req.body.id;
         var data = {
@@ -41,6 +47,20 @@ const ShopsController = (function () {
         }
 
         let result = await shopsRepository.Update(id, data);
+
+        if (result.status) {
+            res.redirect("/admin/shops");
+        } else {
+            console.log(result.message);
+        }
+    }]);
+
+    actions.push(["POST", "add", async (req, res) => {
+        let newShop = {
+            title: req.body.shop
+        };
+
+        let result = await shopsRepository.Create(newShop)
 
         if (result.status) {
             res.redirect("/admin/shops");
@@ -61,28 +81,7 @@ const ShopsController = (function () {
 
     self.GetActions = () => {
         return actions;
-        
 
-        // app.get("/admin/addShop", function (req, res) {
-        //     common.Authorize(req, res);
-
-        //     res.render("shops/create");
-        // });
-
-        // app.post("/addShop", async (req, res) => {
-        //     let newShop = {
-        //         title: req.body.shop
-        //     };
-
-        //     let result = await shopsRepository.Create(newShop)
-
-        //     if (result.status) {
-        //         res.redirect("/admin/shops");
-        //     } else {
-        //         console.log(result.message);
-        //     }
-
-        // });
     }
 
     return self;

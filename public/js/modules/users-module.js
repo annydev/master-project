@@ -19,7 +19,7 @@ var UsersModule = (function() {
   
     self.Init = function() {
         $("button.delete-admin").click((e) => { 
-            let id = $(e.target).data("id");
+            let id = $(e.currentTarget).data("id");
 
             deleteAdmin(id) 
         });

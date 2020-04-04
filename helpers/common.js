@@ -6,9 +6,9 @@ const CommonModule = (function () {
     // Public functions
 
     self.Authorize = function (req, res) {
-        // if (!req.isAuthenticated()) {
-        //     res.redirect("/login");
-        // }
+        if (!req.isAuthenticated()) {
+            res.redirect("/login");
+        }
     };
 
     self.DefineActions = (app, path, actions) => {
