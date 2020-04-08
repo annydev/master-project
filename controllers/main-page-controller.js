@@ -1,9 +1,19 @@
 var express = require('express');
 var router = express.Router();
 
-router.get("/", async (req, res) => {
+const categoriesRepository = require("../repositories/categories-repository");
+
+router.get("/", async(req, res) => {
+
+    // let dbCategories = await categoriesRepository.GetAll();
+    // let result = {
+    //     categories: dbCategories
+    // }
 
     res.render("main-page/index");
+
 });
+
+
 
 module.exports = router;

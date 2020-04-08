@@ -1,0 +1,23 @@
+.navigation-bar {
+    background-color: #80B82D;
+}
+
+.welcome-part {
+    background-color: #e9ecef91;
+    height: 100vh;
+    background-size: unset;
+}
+
+.main-heading {
+    color: black !important;
+}
+
+.grid-style {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 40px;
+}
+
+.about-section {
+    padding: 6em 0 !important;
+}
