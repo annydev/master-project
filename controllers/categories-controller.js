@@ -4,7 +4,7 @@ var router = express.Router();
 const common = require("../helpers/common");
 const categoriesRepository = require("../repositories/categories-repository");
 
-router.get("/", async (req, res) => {
+router.get("/", async(req, res) => {
     common.Authorize(req, res);
 
     let dbCategories = await categoriesRepository.GetAll();
@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
     res.render("categories/index", result);
 })
 
-router.get("/edit/:id", async (req, res) => {
+router.get("/edit/:id", async(req, res) => {
     var id = req.params.id;
 
     common.Authorize(req, res);
@@ -44,13 +44,13 @@ router.get("/edit/:id", async (req, res) => {
     res.render("categories/edit", result);
 });
 
-router.get("/add", async (req, res) => {
+router.get("/add", async(req, res) => {
     common.Authorize(req, res);
 
     res.render("categories/create");
 });
 
-router.post("/edit", async (req, res) => {
+router.post("/edit", async(req, res) => {
     var id = req.body.id;
     var data = {
         title: req.body.title
@@ -65,9 +65,10 @@ router.post("/edit", async (req, res) => {
     }
 });
 
-router.post("/add", async (req, res) => {
+router.post("/add", async(req, res) => {
     let newCategory = {
-        title: req.body.category
+        title: req.body.category,
+        image: req.body.image
     };
 
     let result = await categoriesRepository.Create(newCategory)
@@ -79,7 +80,7 @@ router.post("/add", async (req, res) => {
     }
 });
 
-router.post("/delete", async (req, res) => {
+router.post("/delete", async(req, res) => {
     var categoryId = req.body.id;
 
     let result = await categoriesRepository.Delete(categoryId)
@@ -87,7 +88,7 @@ router.post("/delete", async (req, res) => {
     res.json(result);
 });
 
-router.post("/addSubcategory", async (req, res) => {
+router.post("/addSubcategory", async(req, res) => {
     let newSubcategory = {
         title: req.body.titleSubcategory,
         parentId: req.body.categoryId
@@ -98,7 +99,7 @@ router.post("/addSubcategory", async (req, res) => {
     res.json(result);
 });
 
-router.post("/deleteSubcategory", async (req, res) => {
+router.post("/deleteSubcategory", async(req, res) => {
     var subcategoryId = req.body.subId;
 
     let result = await categoriesRepository.Delete(subcategoryId)

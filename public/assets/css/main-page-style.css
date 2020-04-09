@@ -3,9 +3,15 @@
 }
 
 .welcome-part {
+    margin-top: 134px;
     background-color: #e9ecef91;
-    height: 100vh;
+    height: 60vh;
     background-size: unset;
+    background-position-y: center;
+}
+
+.welcome-part .welcome-text {
+    height: 60vh !important;
 }
 
 .main-heading {
@@ -20,4 +26,43 @@
 
 .about-section {
     padding: 6em 0 !important;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 25px;
+}
+
+.category-body {
+    position: relative;
+    padding: 50%;
+    background-size: cover;
+    cursor: pointer;
+    box-shadow: 2px 4px 16px #e9ecef;
+}
+
+.category-body:hover {
+    opacity: 60%;
+}
+
+.category-title {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px;
+    background: transparent;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.footer {
+    background-color: #80B82D;
+    padding: 3em 0;
+}
+
+.footer-content {
+    color: white;
 }
