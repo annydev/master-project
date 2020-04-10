@@ -1,6 +1,6 @@
 const Category = require("../entities/category");
 
-const CategoriesRepository = (function () {
+const CategoriesRepository = (function() {
     // Preperties
 
     const self = this;
@@ -19,7 +19,7 @@ const CategoriesRepository = (function () {
 
     self.GetById = (categoryId) => {
         return new Promise((resolve) => {
-            Category.findById({ _id: categoryId }, function (err, category) {
+            Category.findById({ _id: categoryId }, function(err, category) {
                 if (!err) {
                     resolve(category)
                 }
@@ -29,7 +29,7 @@ const CategoriesRepository = (function () {
 
     self.GetAll = () => {
         return new Promise((resolve) => {
-            Category.find({ parentId: { $exists: false } }, function (err, categories) {
+            Category.find({ parentId: { $exists: false } }, function(err, categories) {
                 if (!err) {
                     resolve(categories);
                 }
@@ -39,9 +39,11 @@ const CategoriesRepository = (function () {
 
     self.GetAllByParrentId = (parrentId) => {
         return new Promise((resolve) => {
-            Category.find({ parentId: parrentId }, function (err, subcategories) {
+            Category.find({ parentId: parrentId }, function(err, subcategories) {
                 if (!err) {
                     resolve(subcategories);
+                } else {
+                    resolve([]);
                 }
             });
         });
@@ -49,7 +51,7 @@ const CategoriesRepository = (function () {
 
     self.Update = (id, data) => {
         return new Promise((resolve) => {
-            Category.findByIdAndUpdate({ _id: id }, data, { new: true }, function (err) {
+            Category.findByIdAndUpdate({ _id: id }, data, { new: true }, function(err) {
                 resolve(getResult(err));
             });
         });
@@ -59,7 +61,7 @@ const CategoriesRepository = (function () {
         return new Promise((resolve) => {
             const newCategory = new Category(data);
 
-            newCategory.save(function (err) {
+            newCategory.save(function(err) {
                 resolve(getResult(err));
             });
         });
@@ -67,7 +69,7 @@ const CategoriesRepository = (function () {
 
     self.Delete = (id) => {
         return new Promise((resolve) => {
-            Category.findOneAndRemove({ _id: id }, function (err) {
+            Category.findOneAndRemove({ _id: id }, function(err) {
                 resolve(getResult(err));
             });
         });
@@ -76,4 +78,4 @@ const CategoriesRepository = (function () {
     return self;
 })();
 
-module.exports = { ...CategoriesRepository }
+module.exports = {...CategoriesRepository }
