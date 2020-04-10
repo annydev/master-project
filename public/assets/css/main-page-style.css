@@ -54,7 +54,7 @@
     font-weight: bold;
     padding: 10px;
     background: transparent;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #80b82dc2;
     color: white;
 }
 
@@ -65,4 +65,8 @@
 
 .footer-content {
     color: white;
+}
+
+.footer-parts {
+    margin: 1em 0;
 }
