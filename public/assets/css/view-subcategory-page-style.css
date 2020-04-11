@@ -36,8 +36,22 @@
     margin: 5px;
 }
 
+.subcategory-cards:focus {
+    background-color: white;
+    color: #80B82D;
+    border: 1px solid #80B82D;
+    outline: none;
+}
+
 .subcategory-cards:hover {
     opacity: 60%;
+}
+
+.subcategory-cards.active {
+    background-color: white;
+    color: #80B82D;
+    border: 1px solid #80B82D;
+    outline: none;
 }
 
 .subcategory-p {

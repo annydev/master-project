@@ -55,14 +55,14 @@
 
 <section class="pb_section" id="section-gallery">
     <div class="container">
-        <div class="row justify-content-center mb-5">
+        <div class="row justify-content-center mb-5" data-bind="click: AddCategory">
             <div class="col-md-10 text-center">
                 <h2 class="mb-4 text-uppercase pb_letter-spacing-2">Categorii de produse</h2>
             </div>
         </div>
         <div class="categories">
             <% categories.forEach(function(category) { %>
-            <a href="/subcategories/<%= category._id %>" class="category-body category card border-0"
+            <a href="/category/<%= category._id %>" class="category-body category card border-0"
                 style="background-image: url('<%= category.image %>')">
                 <div>
                     <h5 class="category-title d-flex align-items-center">

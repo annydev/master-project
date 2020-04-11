@@ -9,19 +9,19 @@
     <div class="container">
         <div class="subcategory-heading">
             <h2 class="mb-4 text-uppercase pb_letter-spacing-2">
-                <%= subcategory.title %>
+                <%= category.title %>
             </h2>
         </div>
         <div class="grid-style">
-            <a href="/category/<%= subcategory.parentId %>" class="subcategory-cards card">
+            <a class="subcategory-cards card active">
                 <p class="subcategory-p">Toate</p>
             </a>
-            <% subcategories.forEach(function(sub) { %>
-                <a href="/subcategory/<%= sub.id %>" class="<%= sub.class %> subcategory-cards card">
-                    <p class="subcategory-p">
-                        <%= sub.title %>
-                    </p>
-                </a>
+            <% subcategories.forEach(function(subcategory) { %>
+            <a href="/subcategory/<%= subcategory.id %>" class="subcategory-cards card">
+                <p class="subcategory-p">
+                    <%= subcategory.title %>
+                </p>
+            </a>
             <% }); %>
         </div>
     </div>

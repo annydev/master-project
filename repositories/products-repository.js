@@ -37,6 +37,16 @@ const ProductsRepository = (function () {
         });   
     }
 
+    self.GetAllByCategoryIds = (ids) => {
+        return new Promise ((resolve) => {
+             Product.find({ categoryId: { $in: ids } }, function (err, products) {
+                if (!err) {
+                   resolve(products)
+                } 
+            });
+        });   
+    }
+
     self.Create = (data) => {
         return new Promise ((resolve) => {
             const newProduct = new Product(data);
