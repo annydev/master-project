@@ -32,7 +32,7 @@
     <div class="container">
         <div class="card-deck cards">
             <% products.forEach(product => { %>
-            <div class="card">
+            <a href="/price/<%= product._id %>" class="card product-card m-0">
                 <img src="/assets/images/fruits.jpg" class="card-img-top" alt="...">
                 <div class="card-body card-content text-center">
                     <h5 class="card-title"><%= product.title  %> </h5>
@@ -41,7 +41,7 @@
                     <p class="first-card-p">Latest price</p>
                     <p class="second-card-p">80 lei MDL</p>
                 </div>
-            </div>
+            </a>
             <% }); %>
         </div>
     </div>

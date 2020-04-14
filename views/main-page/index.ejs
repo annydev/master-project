@@ -1,77 +1,100 @@
-<% layout('../shared/layouts/main') -%>
-<% block('title', "Main page") -%>
-<% stylesheet('/assets/css/main-page-style.css') -%>
-<% script('/js/modules/home-page-module.js') -%>
+<% layout('../shared/layouts/main') -%> <% block('title', "Main page") -%> <%
+stylesheet('/assets/css/main-page-style.css') -%> <%
+script('/js/modules/home-page-module.js') -%>
 
-<section class="welcome-part pb_cover_v1" style="background-image: url(assets/images/welcome-image.jpg)"
-    id="section-home">
-    <div class="container">
-        <div class="welcome-text row align-items-center justify-content-center">
-            <div class="col-5 mr-auto">
-                <h2 class="heading main-heading mb-3">Food Prices</h2>
-                <div class="sub-heading main-heading">
-                    <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and
-                        Consonantia, there live the blind texts.</p>
-                </div>
-            </div>
+<section
+  class="welcome-part pb_cover_v1"
+  style="background-image: url(assets/images/welcome-image.jpg);"
+  id="section-home"
+>
+  <div class="container">
+    <div class="welcome-text row align-items-center justify-content-center">
+      <div class="col-5 mr-auto">
+        <h2 class="heading main-heading mb-3">Food Prices</h2>
+        <div class="sub-heading main-heading">
+          <p class="mb-5">
+           pentru ca meriti cel mai bun pret
+          </p>
         </div>
+      </div>
     </div>
+  </div>
 </section>
 <!-- END section -->
 
 <section class="pb_section about-section" id="section-about">
-    <div class="container">
-        <div class="grid-style">
-            <div class="">
-                <div class="">
-                    <p><img src="assets/images/fruits.jpg" alt="Instant Image" class="img-fluid"></p>
-                </div>
-            </div>
-            <div class="">
-                <h2 class="mb-4 text-uppercase pb_letter-spacing-2">The Restaurant</h2>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
-                    the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large
-                    language ocean.</p>
-
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-            </div>
-            </div>
+  <div class="container">
+    <div class="grid-style">
+      <div class="">
+        <div class="">
+          <p>
+            <img
+              src="/assets/images/fruits.jpg"
+              alt="Instant Image"
+              class="img-fluid"
+            />
+          </p>
         </div>
+      </div>
+      <div class="">
+        <h2 class="mb-4 text-uppercase pb_letter-spacing-2">The Restaurant</h2>
+        <p>
+          Far far away, behind the word mountains, far from the countries
+          Vokalia and Consonantia, there live the blind texts. Separated they
+          live in Bookmarksgrove right at the coast of the Semantics, a large
+          language ocean.
+        </p>
+
+        <p>
+          A small river named Duden flows by their place and supplies it with
+          the necessary regelialia.
+        </p>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- END section -->
 
-<section class="pb_md_py_cover text-center" style="background-image: url(assets/images/milk.jpg)" id="section-home">
-    <div class="container">
-        <div class="row align-items-center justify-content-center">
-            <div class="col-md-9  order-md-1">
-                <h2 class="main-heading heading mb-3">Delicious &amp; Nutritious</h2>
-                <p class="main-heading sub-heading">Far far away, behind the word mountains, far from the countries
-                    Vokalia and Consonantia, there live the blind texts.</p>
-            </div>
-        </div>
+<section
+  class="pb_md_py_cover text-center"
+  style="background-image: url(assets/images/milk.jpg);"
+>
+  <div class="container">
+    <div class="row align-items-center justify-content-center">
+      <div class="col-md-9 order-md-1">
+        <h2 class="main-heading heading mb-3">Delicious &amp; Nutritious</h2>
+        <p class="main-heading sub-heading">
+          Far far away, behind the word mountains, far from the countries
+          Vokalia and Consonantia, there live the blind texts.
+        </p>
+      </div>
     </div>
+  </div>
 </section>
 <!-- END section -->
 
 <section class="pb_section" id="section-gallery">
-    <div class="container">
-        <div class="row justify-content-center mb-5" data-bind="click: AddCategory">
-            <div class="col-md-10 text-center">
-                <h2 class="mb-4 text-uppercase pb_letter-spacing-2">Categorii de produse</h2>
-            </div>
-        </div>
-        <div class="categories">
-            <% categories.forEach(function(category) { %>
-            <a href="/category/<%= category._id %>" class="category-body category card border-0"
-                style="background-image: url('<%= category.image %>')">
-                <div>
-                    <h5 class="category-title d-flex align-items-center">
-                        <%= category.title %>
-                    </h5>
-                </div>
-            </a>
-            <% }); %>
-        </div>
+  <div class="container">
+    <div class="row justify-content-center mb-5" data-bind="click: AddCategory">
+      <div class="col-md-10 text-center">
+        <h2 class="mb-4 text-uppercase pb_letter-spacing-2">
+          Categorii de produse
+        </h2>
+      </div>
     </div>
+    <div class="categories">
+      <% categories.forEach(function(category) { %>
+      <a
+        href="/category/<%= category._id %>"
+        class="category-body category card border-0"
+        style="background-image: url('<%= category.image %>');"
+      >
+        <h5 class="category-title d-flex align-items-center">
+          <%= category.title %>
+        </h5>
+      </a>
+      <% }); %>
+    </div>
+  </div>
 </section>
 <!-- END section -->

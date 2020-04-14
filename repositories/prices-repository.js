@@ -27,6 +27,16 @@ const PricesRepository = (function () {
         });     
     };
 
+    self.GetLastPriceByDate = (shopId, productId) => {
+        return new Promise ((resolve) => {
+             Price.findOne({$and: [{ shopId: shopId }, {productId: productId}]}, null, { sort: { date: 'desc' } }, function (err, foundPrice) {
+                if (!err) {
+                    resolve(foundPrice)
+                }
+            });
+        });     
+    };
+
     self.GetAllByProductId = (id) => {
         return new Promise ((resolve) => {
             Price.find({ productId: id }, function (err, prices) {

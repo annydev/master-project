@@ -10,7 +10,7 @@ var ProductsModule = (function() {
             id: id
         };
     
-        $.post("/admin/product/delete", data, function () { //result came from server
+        $.post("/admin/products/delete", data, function () { //result came from server
             location.reload();
         });
     }

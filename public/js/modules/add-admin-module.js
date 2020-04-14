@@ -1,33 +1,28 @@
 var AddUsersModule = (function () {
-    // Preperties
+  // Preperties
 
-    var self = this;
+  var self = this;
 
-    // Private functions
+  // Public functions
 
-    function addAdmin() {
-        var password = $("#exampleInputPassword").val();
-        var confirmPassword = $("#exampleRepeatPassword").val();
+  self.Init = function () {
+    $("#submit").click((e) => {
+      var password = $("#exampleInputPassword").val();
+      var confirmPassword = $("#exampleRepeatPassword").val();
 
-        if (password != confirmPassword) {
-            alert("Passwords Don't Match");
-            return false;
-        }
-        return true;
-    }
+      if (password != confirmPassword) {
+        toastr.error("Passwords Don't Match");
 
-    // Public functions
+        e.stopPropagation();
+      } else {
+        $("#addUser").submit();
+      }
+    });
+  };
 
-    self.Init = function () {
-        $("#submit").click(() => {
-
-            addAdmin()
-        });
-    };
-
-    return self;
+  return self;
 })();
 
 $(document).ready(function () {
-    AddUsersModule.Init()
+  AddUsersModule.Init();
 });

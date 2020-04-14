@@ -1,0 +1,50 @@
+<% layout('../shared/layouts/main') -%> <% block('title', "Prices page") -%> <%
+stylesheet('/assets/css/view-subcategory-page-style.css') -%> <%
+stylesheet('/assets/css/prices-style.css') -%>
+
+<section class="pb_section about-section pb-0" id="section-about">
+  <div class="container">
+    <div class="text-center mb-4 my-4">
+      <h1>Detaliile produsului</h1>
+    </div>
+    <div class="row justify-content-center">
+      <div class="product-details col">
+        <img src="/assets/images/fruits.jpg" alt="" />
+      </div>
+      <div class="product-details col">
+        <h2><%= product.title %></h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </div>
+    </div>
+    <div class="text-center mb-4 my-4">
+      <h1>Magazinele in care gasiti acest produs</h1>
+    </div>
+    <ul class="list-group my-5">
+      <% prices.forEach(function(price) { %>
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center"
+      >
+        <span><%= price.shopName %></span>
+        <% if (!!price.lastPrice) { %>
+        <span class="font-weight-bold">
+          <%= price.lastPrice %>
+        </span>
+        <% } else { %>
+        <a href="#">
+          <span> + sugereaza pretul</span>
+        </a>
+        <% } %>
+      </li>
+      <% }); %>
+    </ul>
+  </div>
+</section>
+<!-- END section -->

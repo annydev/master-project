@@ -17,7 +17,7 @@ router.post("/login", async (req, res) => {
 
     req.login(user, function (err) {
         if (!err) {
-            res.redirect("/admin/dashboard");
+            res.redirect("/admin/users");
         }
     });
 

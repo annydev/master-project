@@ -49,13 +49,14 @@
 .category-title {
     position: absolute;
     left: 50%;
-    transform: translate(-50%);
+    top: 50%;
+    transform: translate(-50%, -50%);
     font-size: 24px;
-    font-weight: bold;
-    padding: 10px;
+    padding: 20px 30px;
     background: transparent;
-    background-color: #80b82dc2;
+    background-color: #80b82d;
     color: white;
+    text-align: center;
 }
 
 .footer {

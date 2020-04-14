@@ -21,18 +21,23 @@ var AddProductsModule = (function () {
             productCategory: resultCategoryId,
             productImage: $("#imageURLProduct").val()
         }
+
+        if(!data.titleProduct || !data.productCategory) {
+            toastr.error("Please fill title and category!");
+            return;
+        }
+
         $.post("add", data, function (json) {
             console.log(json);
             window.location.href = "/admin/products";
         });
-
     }
 
     function createOptionSelectForSubcategories() {
         let data = {
             categoryId: $("#categoryTitle").val()
         }
-    
+
         $.post("getSubcategories", data, function (json) {
             $('#subcategoryTitle').html("");
     
