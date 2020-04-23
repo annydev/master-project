@@ -59,6 +59,8 @@ router.get("/edit/:id", async (req, res) => {
         resultPrices.push({
             id: price._id,
             price: price.price,
+            image: price.image,
+            status: price.isApproved,
             date: moment(price.date).format('MM/DD/YYYY, k:mm:ss'),
             shopTitle: dbShop.title
         });

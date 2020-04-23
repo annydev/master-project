@@ -8,7 +8,8 @@ router.post("/add", async (req, res) => {
         price: req.body.price,
         productId: req.body.productId,
         shopId: req.body.shopId,
-        date: req.body.date
+        date: req.body.date,
+        isApproved: true
     };
 
     let result = await pricesRepository.Create(newPrice)
@@ -20,6 +21,14 @@ router.post("/delete", async (req, res) => {
     let priceId = req.body.id;
 
     let result = await pricesRepository.Delete(priceId)
+
+    res.json(result);
+});
+
+router.post("/statusUpdate", async (req, res) => {
+    let priceId = req.body.id;
+
+    let result = await pricesRepository.Update(priceId)
 
     res.json(result);
 });

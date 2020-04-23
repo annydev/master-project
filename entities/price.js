@@ -4,7 +4,10 @@ let schema = new mongoose.Schema({
     price: Number,
     productId: String,
     shopId: String,
-    date: Date
+    date: Date,
+    image: String,
+    isApproved: Boolean,
+    expiredDate: Date
 });
 
 let object = mongoose.model("Price", schema);

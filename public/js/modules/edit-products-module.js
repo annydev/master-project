@@ -34,6 +34,18 @@ var EditProductsModule = (function () {
         });
     }
 
+    function updateStatusPrice(id) {
+        var data = {
+            id: id
+        };
+
+        $.post("/admin/prices/statusUpdate", data, function () { //result came from server
+            location.reload();
+        });
+    }
+
+    
+
     // Public functions
 
     self.Init = function () {
@@ -47,11 +59,18 @@ var EditProductsModule = (function () {
 
             deletePrice(id) 
         });
+
+        $("button.update-price-status").click((e) => { 
+            let id = $(e.currentTarget).data("id");
+
+            updateStatusPrice(id) 
+        });        
     };
+    
 
     return self;
 })();
 
 $(document).ready(function () {
-    EditProductsModule.Init()
+    EditProductsModule.Init();
 });

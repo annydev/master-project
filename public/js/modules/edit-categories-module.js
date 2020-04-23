@@ -28,7 +28,7 @@ var EditCategoriesModule = (function () {
 
     // Public functions
 
-    self.Init = function (lang) {
+    self.Init = function () {
         
         $("button.add-subcategory").click(() => {
             addSubcategory();

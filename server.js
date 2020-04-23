@@ -5,7 +5,6 @@ const express = require("express");
 const engine = require("ejs-locals");
 const mongoose = require("mongoose");
 
-const common = require("./helpers/common");
 const routing = require("./routing");
 
 const app = express();

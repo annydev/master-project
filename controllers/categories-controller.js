@@ -26,7 +26,7 @@ router.get("/", async(req, res) => {
     }
 
     res.render("categories/index", result);
-})
+});
 
 router.get("/edit/:id", async(req, res) => {
     var id = req.params.id;

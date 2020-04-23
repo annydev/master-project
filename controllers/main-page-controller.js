@@ -87,6 +87,7 @@ router.get("/price/:id", async (req, res) => {
 
 
     let priceDetails = {
+      shopId: shop._id,
       shopName: shop.title,
       lastPrice: !!dbLastPrice ? dbLastPrice.price + "MDL" : "",
     };
@@ -100,6 +101,22 @@ router.get("/price/:id", async (req, res) => {
   };
 
   res.render("main-page/product-prices", result);
+});
+
+router.post("/prices/suggestPrice", async (req, res) => {
+  let newPrice = {
+    price: req.body.price,
+    productId: req.body.productId,
+    shopId: req.body.shopId,
+    image: req.body.image,
+    date: req.body.date,
+    expiredDate: req.body.expiredDate,
+    isApproved: false
+}
+
+let result = await pricesRepository.CreateStatusFalse(newPrice)
+
+res.json(result);
 });
 
 module.exports = router;

@@ -29,7 +29,9 @@ const PricesRepository = (function () {
 
     self.GetLastPriceByDate = (shopId, productId) => {
         return new Promise ((resolve) => {
-             Price.findOne({$and: [{ shopId: shopId }, {productId: productId}]}, null, { sort: { date: 'desc' } }, function (err, foundPrice) {
+            let currentDate = new Date();
+
+             Price.findOne({$and: [{ shopId: shopId }, {productId: productId}, {isApproved: true}]}, null, { sort: { date: 'desc' } }, function (err, foundPrice) {
                 if (!err) {
                     resolve(foundPrice)
                 }
@@ -57,10 +59,28 @@ const PricesRepository = (function () {
         })
     }
 
+    self.CreateStatusFalse = (data) => {
+        return new Promise((resolve) => {
+            const newPrice = new Price(data);
+
+            newPrice.save(function (err) {
+                resolve(getResult(err));
+            });
+        })
+    }
+
     self.Delete = (id) => {
         return new Promise ((resolve) => {
             Price.findOneAndRemove({ _id: id }, function (err) {
                 resolve(getResult(err));
+            });
+        });
+    }
+
+    self.Update = (id) => {
+        return new Promise ((resolve) => {
+            Price.findByIdAndUpdate({ _id: id }, {isApproved: true, date: new Date()}, { new: true }, function (err) {
+               resolve(getResult(err))
             });
         });
     }
