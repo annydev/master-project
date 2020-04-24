@@ -64,7 +64,15 @@ var EditProductsModule = (function () {
             let id = $(e.currentTarget).data("id");
 
             updateStatusPrice(id) 
-        });        
+        });   
+        
+        $("button.view-image").click(function(e) {
+            let src = $(e.currentTarget).data("src");
+            
+            $("#price-image").attr("src", src);
+
+            $("#price-image-modal").modal("show");
+        })
     };
     
 

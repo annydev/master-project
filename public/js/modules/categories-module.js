@@ -17,7 +17,7 @@ var CategoriesModule = (function () {
 
     // Public functions
 
-    self.Init = function (lang) {
+    self.Init = function () {
         $("button.delete").click((e) => {
             let id = $(e.currentTarget).data("id");
 

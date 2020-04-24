@@ -1,51 +1,113 @@
 var AddNewProductsPriceModule = (function () {
-    // Preperties
+  // Preperties
 
-    var self = this;
+  var self = {
+    acqImageFile: "",
+  };
 
-    // Private functions
-    function currentDate() {
-        var date = new Date();
-        return date;
-    }
+  // Private functions
+  function currentDate() {
+    var date = new Date();
+    return date;
+  }
 
-    function suggestedPrice() {
+  function convertToBase64(file, cb) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      cb(null, e.target.result);
+    };
+    reader.onerror = function (e) {
+      cb(e);
+    };
+    reader.readAsDataURL(file);
+  }
 
-        var data = {
-            price: $("#price").val(),
-            productId: $("#product-id").val(),
-            shopId: $("#shop-id").val(),
-            date: currentDate(),
-            image: $("#image").val(),
-            expirationDate: $("#expiration-date").val(),
-            isApproved: false
+  const resizeImage = (base64Str, maxWidth = 1000, maxHeight = 1000) => {
+    return new Promise((resolve) => {
+      let img = new Image();
+      img.src = base64Str;
+      img.onload = () => {
+        let canvas = document.createElement("canvas");
+        const MAX_WIDTH = maxWidth;
+        const MAX_HEIGHT = maxHeight;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', 0.9));
+      };
+    });
+  };
+
+  function suggestedPrice() {
+    var imgData = self.acqImageFile;
+
+    var priceInfo = {
+        price: $("#price").val(),
+        productId: $("#product-id").val(),
+        shopId: $("#shop-id").val(),
+        date: currentDate(),
+        image: imgData,
+        isApproved: false,
+      };
+
+      $.post("/prices/suggestPrice", priceInfo, function (json) {
+        console.log(json);
+        location.reload();
+      });
+  }
+
+  // Public functions
+
+  self.Init = function () {
+    $(".suggest-price").click((e) => {
+      let productId = $(".product").val();
+      let shopId = $(e.currentTarget).closest("li").data("id");
+
+      $("#product-id").val(productId);
+      $("#shop-id").val(shopId);
+    });
+
+    $("button.save-modal-content").click(() => {
+      suggestedPrice();
+    });
+
+    $("#image").on("change", function (e) {
+      e.preventDefault();
+      var file = e.target.files[0];
+
+      convertToBase64(file, function (err, data) {
+        if (err) {
+          console.log(err);
+          return;
         }
 
-        $.post("/prices/suggestPrice", data, function (json) {
-            console.log(json);         
-            location.reload();
+        resizeImage(data).then((resizedImage) => {
+          self.acqImageFile = resizedImage; // store reference to file
+          $("#imagePreview").removeClass("d-none");
+          $("#imagePreview").attr("src", resizedImage);
         });
-    }
+      });
+    });
+  };
 
-    // Public functions
-
-    self.Init = function () {
-        $(".suggest-price").click((e) => {
-            let productId = $(".product").val();
-            let shopId = $(e.currentTarget).closest("li").data("id");
-
-            $("#product-id").val(productId);
-            $("#shop-id").val(shopId);
-        });
-
-        $(".save-modal-content").click(() => {
-            suggestedPrice()
-        });
-    };
-
-    return self;
+  return self;
 })();
 
 $(document).ready(function () {
-    AddNewProductsPriceModule.Init()
+  AddNewProductsPriceModule.Init();
 });

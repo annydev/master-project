@@ -72,9 +72,9 @@
             <td>
               <div class="btn-group " role="group" aria-label="Basic example">
                 <% if (!!price.image) { %>
-                <a class="btn btn-secondary" href="<%= price.image %>" target="_blank">
+                <button class="view-image btn btn-secondary" data-src="<%= price.image %>">
                   <i class="fas fa-image"></i>
-                </a>
+                </button>
               <% } %>
                 <% if (!price.status) { %>
                   <button class="update-price-status btn btn-success btn-sm" data-id="<%= price.id %>">
@@ -90,6 +90,16 @@
           <% }); %>
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<div id="price-image-modal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <img src="..." id="price-image" class="img-fluid" alt="Responsive image">
+      </div>
     </div>
   </div>
 </div>

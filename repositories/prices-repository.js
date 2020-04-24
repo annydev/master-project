@@ -19,7 +19,7 @@ const PricesRepository = (function () {
 
     self.GetLastByProductId = (id) => {
         return new Promise ((resolve) => {
-             Price.findOne({ productId: id }, null, { sort: { date: 'desc' } }, function (err, foundPrice) {
+             Price.findOne({$and: [{ productId: id }, {isApproved: true}]}, null, { sort: { date: 'desc' } }, function (err, foundPrice) {
                 if (!err) {
                     resolve(foundPrice)
                 }

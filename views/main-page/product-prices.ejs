@@ -65,9 +65,11 @@ stylesheet('/assets/css/prices-style.css') -%>
         <div class="col">
           <input type="hidden" id="product-id">
           <input type="hidden" id="shop-id">
-          <input type="text" id="price" class="d-block mb-3 form-control" placeholder="pretul">
-          <input type="text" id="image" class="d-block mb-3 form-control" placeholder="imagine">
-          <input type="date" id="expiration-date" class="d-block mb-3 form-control" placeholder="data expirarii pretului">
+          <label for="price">Propune noul pret:</label>
+          <input type="text" id="price" class="d-block mb-3 form-control" placeholder="MDL">
+          <label for="image">Introduceti imaginea cecului cu pretul propus</label>
+          <input type="file" id="image" class="d-block mb-3 form-control">
+          <img id="imagePreview" class="img-fluid d-none" alt="Responsive image">
         </div>    
       </div>
       <div class="modal-footer">

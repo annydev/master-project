@@ -6,8 +6,7 @@ let schema = new mongoose.Schema({
     shopId: String,
     date: Date,
     image: String,
-    isApproved: Boolean,
-    expiredDate: Date
+    isApproved: Boolean
 });
 
 let object = mongoose.model("Price", schema);

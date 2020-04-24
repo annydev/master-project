@@ -14,7 +14,8 @@ app.engine('ejs', engine);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json({limit: '10mb'}));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost:27017/pricesDB", {
