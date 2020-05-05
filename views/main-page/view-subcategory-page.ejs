@@ -33,7 +33,7 @@
         <div class="card-deck cards">
             <% products.forEach(product => { %>
             <a href="/price/<%= product._id %>" class="card product-card m-0">
-                <img src="/assets/images/fruits.jpg" class="card-img-top" alt="...">
+                <img src="<%= product.imageURL %>" class="card-img-top" alt="...">
                 <div class="card-body card-content text-center">
                     <h5 class="card-title"><%= product.title  %> </h5>
                 </div>

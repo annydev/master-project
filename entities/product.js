@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
     let schema = new mongoose.Schema({
         title: String,
+        description: String,
         categoryId: String,
         imageURL: String
     });

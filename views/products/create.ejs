@@ -6,11 +6,18 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Add new products</h1>
+    <div class="input-group-append">
+        <button class="btn btn-primary product-save" type="submit" id="button-addon2">Save</button>
+    </div>
 </div>
 <div class="card">
     <div class="card-body">
         <div class="input-group mb-3">
             <input type="text" class="form-control" id="product" placeholder="title of the product"
+                aria-label="Recipient's username" aria-describedby="button-addon2">
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="description" placeholder="product description"
                 aria-label="Recipient's username" aria-describedby="button-addon2">
         </div>
         <div class="input-group mb-3">
@@ -28,9 +35,6 @@
         </div>
         <div class="form-group my-3">
             <select class="custom-select d-none" id="subcategoryTitle"></select>
-        </div>
-        <div class="input-group-append">
-            <button class="btn btn-primary product-save" type="submit" id="button-addon2">Save</button>
         </div>
     </div>
 </div>

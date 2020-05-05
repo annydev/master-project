@@ -113,6 +113,7 @@ router.post("/edit", async (req, res) => {
 router.post("/add", async (req, res) => {
     let newProduct = {
         title: req.body.titleProduct,
+        description: req.body.productDescription,
         categoryId: req.body.productCategory,
         imageURL: req.body.productImage
     }

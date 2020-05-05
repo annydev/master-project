@@ -3,3 +3,32 @@
 .card-bottom-border {
     border-bottom: 1px solid #e6e6e6;
 }
+
+.login-image {
+    background-image: url("/images/login.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.error {
+    font-size: 15px;
+    width: 100%;
+}
+
+label.error {
+    position: absolute;
+    font-size: 0.78rem;
+    line-height: 1.25;
+    padding-top: 4px;
+    color: #ff8282;
+  }
+  
+  .text-coral {
+    color: #ff8282 !important;
+  }
+
+  #bottom-signup-form label.error,
+  #addUser label.error {
+    color: #fe0000;
+    margin-bottom: 0;
+  }

@@ -18,12 +18,22 @@ var AddProductsModule = (function () {
 
         var data = {
             titleProduct: $("#product").val(),
+            productDescription: $("#description").val(),
             productCategory: resultCategoryId,
             productImage: $("#imageURLProduct").val()
         }
 
-        if(!data.titleProduct || !data.productCategory) {
-            toastr.error("Please fill title and category!");
+        if(!data.titleProduct) {
+            toastr.error("Please fill title of the product!");
+            return;
+        } else if(!data.productDescription) {
+            toastr.error("Please fill description of the product!");
+            return;
+        } else if(!data.productCategory) {
+            toastr.error("Please fill category to the product!");
+            return;
+        } else if (!data.productImage) {
+            toastr.error("Please add image to the product!");
             return;
         }
 

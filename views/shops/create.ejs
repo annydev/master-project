@@ -1,19 +1,23 @@
 <% layout('../shared/layouts/admin') -%>
 <% block('title', "Add new shop page") -%>
+<% stylesheet('/css/styles.css') -%>
+
+<% script('/js/modules/add-shop-module.js') -%>
 
 <!-- Page Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Add new shop</h1>
-</div>
-<form class="user" action="add" method="post">
+<form class="user" id="add-shop" action="add" method="POST">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Add new shop</h1>
+    <div class="input-group-append">
+      <button class="btn btn-primary my-4" type="submit" id="button-addon2">Save</button>
+    </div>
+  </div>
   <div class="card">
     <div class="card-body">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" name="shop" placeholder="title of the shop"
-          aria-label="Recipient's username" aria-describedby="button-addon2">
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="submit" id="button-addon2">Save</button>
-        </div>
+      <div class="form-group mb-3">
+        <label for="shop">Add shop<span class="text-coral">*</span></label>
+        <input type="text" class="form-control" name="shop" id="shopName" placeholder="title of the shop"
+          aria-label="Recipient's username" aria-describedby="button-addon2" required>
       </div>
     </div>
   </div>

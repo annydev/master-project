@@ -1,24 +1,29 @@
 <% layout('../shared/layouts/admin') -%>
 <% block('title', "Add new category page") -%>
+<% stylesheet('/css/styles.css') -%>
+
+<% script('/js/modules/add-category-module.js') -%>
 
 <!-- Page Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Add new category</h1>
-</div>
-<form class="user" action="add" method="post">
+<form class="user" id="add-category" action="add" method="post">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Add new category</h1>
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit" id="button-addon2">Save</button>
+        </div>
+    </div>
     <div class="card">
         <div class="card-body">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" name="category" placeholder="title of the category"
+            <div class="form-group mb-3">
+                <label for="category">Add category <span class="text-coral">*</span></label>
+                <input type="text" class="form-control" name="category" id="category-title" placeholder="title of the category"
                     aria-label="Recipient's username" aria-describedby="button-addon2">
             </div>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" name="image" placeholder="image URL"
+            <div class="form-group mb-3">
+                <label for="image">Add image<span class="text-coral">*</span></label>
+                <input type="text" class="form-control" name="image" id="category-image" placeholder="image URL"
                     aria-label="Recipient's username" aria-describedby="button-addon2">
-            </div>
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="submit" id="button-addon2">Save</button>
-            </div>
+            </div>    
         </div>
     </div>
 </form>
