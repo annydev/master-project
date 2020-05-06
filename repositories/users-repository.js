@@ -37,6 +37,18 @@ const UsersRepository = (function () {
         });
     }
 
+    self.findUser = (user) => {
+        return new Promise((resolve) => {
+            User.findOne({username: user}, function (err, user) {
+                if(err) {
+                    resolve(getResult(err))
+                } else {
+                    resolve(user)
+                }
+              });
+        });
+    }
+
     self.GetNew =  (username, password) => {
         return new User({
             username: username,

@@ -4,38 +4,39 @@
 <% script('/js/modules/edit-products-module.js') -%>
 
 <!-- Page Heading -->
+<form class="user" action="/admin/products/edit" method="post">
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">Edit product name</h1>
+  <div class="input-group-append">
+    <button class="btn btn-primary" type="submit" id="button-addon2">Save</button>
+  </div>
 </div>
-<form class="user" action="/admin/products/edit" method="post">
   <div class="card">
     <div class="card-body">
       <div class="input-group mb-3">
         <input type="hidden" name="id" value="<%= product._id %>" id="product-id">
         <input type="text" class="form-control editCategory" name="title" aria-label="Recipient's username"
-          aria-describedby="button-addon2" value="<%= product.title %>">
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="submit" id="button-addon2">Save</button>
-        </div>
+          aria-describedby="button-addon2" value="<%= product.title %>">       
       </div>
     </div>
   </div>
 </form>
-
 <div class="my-4 d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">Prices section</h1>
   <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm add-price">
     <i class=" fas fa-plus fa-sm text-white-50"></i>
-    Add new price
+    Add new 
   </button>
 </div>
 <div class="card">
   <div class="card-body">
-    <div class="input-group mb-3">
+    <div class="form-group mb-3">
+      <label for="price">Price<span class="text-coral">*</span></label>
       <input type="text" class="form-control" id="price" placeholder="amount MDL" aria-label="Recipient's username"
         aria-describedby="button-addon2">
     </div>
     <div class="form-group my-3">
+      <label for="shop-id">Shops<span class="text-coral">*</span></label>
       <select class="custom-select" id="shop-id">
         <option selected disabled>Choose shop</option>
         <% shops.forEach(function(shop) { %>

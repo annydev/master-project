@@ -63,6 +63,18 @@ const ShopsRepository = (function () {
         });
     }
 
+    self.findShop = (shopTitle) => {
+        return new Promise((resolve) => {
+            Shop.findOne({ title: shopTitle }, function (err, foundTitle) {
+                if(err) {
+                    resolve(getResult(err))
+                } else {
+                    resolve(foundTitle)
+                }
+            });
+        });
+    }
+
     return self;
 })();
 

@@ -118,9 +118,15 @@ router.post("/add", async (req, res) => {
         imageURL: req.body.productImage
     }
 
-    let result = await productsRepository.Create(newProduct)
+    let foundProduct = await productsRepository.findProduct(newProduct.title);
 
-    res.json(result);
+    if(foundProduct) {
+        console.log("This product already exists in DB");     
+    } else {
+        let result = await productsRepository.Create(newProduct)
+
+        res.json(result);
+    }  
 });
 
 router.post("/delete", async (req, res) => {

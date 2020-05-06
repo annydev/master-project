@@ -73,6 +73,19 @@ const ProductsRepository = (function () {
         });
     }
 
+    self.findProduct = (title) => {
+        return new Promise ((resolve) => {
+            Product.findOne({ title: title }, function (err, foundProduct) {
+                if(err) {
+                    resolve(getResult(err))
+                } else {
+                    resolve(foundProduct)
+                }
+            });
+        });
+    }
+
+
     return self;
 })();
 

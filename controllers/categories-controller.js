@@ -71,13 +71,19 @@ router.post("/add", async(req, res) => {
         image: req.body.image
     };
 
-    let result = await categoriesRepository.Create(newCategory)
+    let foundCategory = await categoriesRepository.findCategory(newCategory.title);
 
-    if (result.status) {
-        res.redirect("/admin/categories");
+    if(foundCategory) {
+        console.log("This category is already in use");    
     } else {
-        console.log(result.message);
-    }
+        let result = await categoriesRepository.Create(newCategory)
+
+        if (result.status) {
+            res.redirect("/admin/categories");
+        } else {
+            console.log(result.message);
+        }
+    }  
 });
 
 router.post("/delete", async(req, res) => {
@@ -94,9 +100,15 @@ router.post("/addSubcategory", async(req, res) => {
         parentId: req.body.categoryId
     };
 
-    let result = await categoriesRepository.Create(newSubcategory)
+    let foundSubcategory = await categoriesRepository.findCategory(newSubcategory.title);
 
-    res.json(result);
+    if(foundSubcategory) {
+        console.log("This subcategory is already in use");  
+    } else {
+        let result = await categoriesRepository.Create(newSubcategory)
+
+        res.json(result);
+    } 
 });
 
 router.post("/deleteSubcategory", async(req, res) => {

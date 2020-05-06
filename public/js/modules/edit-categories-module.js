@@ -11,6 +11,10 @@ var EditCategoriesModule = (function () {
             titleSubcategory: $("#titleSubcategory").val()
         }
 
+        if(!data.titleSubcategory) {
+            return toastr.error("Please fill title of the subcategory!");
+        }
+
         $.post("/admin/categories/addSubcategory", data, function (json) {
             location.reload();
         });
@@ -31,6 +35,7 @@ var EditCategoriesModule = (function () {
     self.Init = function () {
         
         $("button.add-subcategory").click(() => {
+            
             addSubcategory();
         });
 

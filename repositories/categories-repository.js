@@ -75,6 +75,19 @@ const CategoriesRepository = (function() {
         });
     }
 
+    self.findCategory = (title) => {
+        return new Promise((resolve) => {
+            Category.findOne({ title: title }, function(err, foundTitle) {
+                if(err) {
+                    resolve(getResult(err));
+                } else {
+                    resolve(foundTitle)
+                }
+            });
+        });
+    }
+
+
     return self;
 })();
 

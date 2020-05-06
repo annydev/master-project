@@ -55,13 +55,20 @@ router.post("/add", async (req, res) => {
         title: req.body.shop
     };
 
-    let result = await shopsRepository.Create(newShop)
+    const foundShop = await shopsRepository.findShop(newShop.title);
 
-    if (result.status) {
-        res.redirect("/admin/shops");
+    if(foundShop) {
+        console.log("This title is already in use"); 
     } else {
-        console.log(result.message);
+        const result = await shopsRepository.Create(newShop)
+
+        if (result.status) {
+            res.redirect("/admin/shops");
+        } else {
+            console.log(result.message);
+        }
     }
+   
 });
 
 router.post("/delete", async (req, res) => {

@@ -18,6 +18,14 @@ var EditProductsModule = (function () {
             date: currentDate("ru")
         }
 
+        if(!data.price) {
+            toastr.error("Please add product price!");
+            return;
+        } else if (!data.shopId) {
+            toastr.error("Please choose the shop!");
+            return;
+        }
+
         $.post("/admin/prices/add", data, function (json) {
             console.log(json)
             location.reload();
