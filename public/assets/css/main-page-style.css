@@ -18,8 +18,25 @@ html {
   height: 60vh !important;
 }
 
+.welcome-text-heading {
+  font-family: 'Courgette', cursive;
+  color: black !important;
+  font-size: 30px !important;
+}
+
 .main-heading {
   color: black !important;
+}
+
+.see-categories {
+  background-color: #80b82d;
+  color: white;
+}
+
+.see-categories:hover {
+  background-color: white;
+  color: #80b82d;
+  border: 1px solid #80b82d;
 }
 
 .grid-style {
