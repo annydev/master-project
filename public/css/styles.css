@@ -32,3 +32,7 @@ label.error {
     color: #fe0000;
     margin-bottom: 0;
   }
+
+  .support-email {
+    color: #cfe4fa;
+  }

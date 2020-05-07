@@ -10,10 +10,10 @@ stylesheet('/assets/css/prices-style.css') -%>
       <h1>Detaliile produsului</h1>
     </div>
     <div class="row justify-content-center">
-      <div class="product-details col">
-        <img src="<%= product.imageURL %>" alt="" />
+      <div class="product-details product-image col-4 w-100" style="background-image: url('<%= product.imageURL %>')">
+        <!-- <img src="" alt="" /> -->
       </div>
-      <div class="product-details col">
+      <div class="product-details col-5">
         <input type="hidden" class="product" value="<%= product._id %>">
         <h2><%= product.title %></h2>
         <p><%= product.description %></p>

@@ -32,15 +32,18 @@
     <div class="container">
         <div class="card-deck cards">
             <% products.forEach(product => { %>
-            <a href="/price/<%= product._id %>" class="card product-card m-0">
-                <img src="<%= product.imageURL %>" class="card-img-top" alt="...">
-                <div class="card-body card-content text-center">
-                    <h5 class="card-title"><%= product.title  %> </h5>
-                </div>
-                <div class="text-center mb-3">
-                    <p class="first-card-p">Latest price</p>
-                    <p class="second-card-p">80 lei MDL</p>
-                </div>
+            <a href="/price/<%= product._id %>" class="card product-card m-0 d-flex flex-column">
+                    <div class="card-img-top cards-image" style="background-image: url('<%= product.imageURL %>')">
+                    </div>
+                <div>
+                    <div class="card-body card-content text-center">
+                        <h5 class="card-title"><%= product.title  %> </h5>
+                    </div>
+                    <div class="text-center mb-3">
+                        <p class="first-card-p">Latest price</p>
+                        <p class="second-card-p">80 lei MDL</p>
+                    </div>
+                </div>   
             </a>
             <% }); %>
         </div>

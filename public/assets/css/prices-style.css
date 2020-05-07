@@ -1,5 +1,12 @@
 .product-details {
-  margin: 50px 20px;
+  margin: 50px 10px;
+}
+
+.product-image {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 300px;
+  background-position: center;
 }
 
 /* body {
