@@ -57,9 +57,9 @@ stylesheet('/assets/css/prices-style.css') -%>
         <div class="col">
           <input type="hidden" id="product-id">
           <input type="hidden" id="shop-id">
-          <label for="price">Propune noul pret:</label>
-          <input type="text" id="price" class="d-block mb-3 form-control" placeholder="MDL">
-          <label for="image">Introduceti imaginea cecului cu pretul propus</label>
+          <label for="price">Propune noul pret:<span class="text-coral">*</span></label>
+          <input type="number" min="1" id="price" class="d-block mb-3 form-control" placeholder="MDL">
+          <label for="image">Introduceti imaginea cecului cu pretul propus<span class="text-coral">*</span></label>
           <input type="file" id="image" class="d-block mb-3 form-control">
           <img id="imagePreview" class="img-fluid d-none" alt="Responsive image">
         </div>    

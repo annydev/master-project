@@ -65,9 +65,22 @@ var AddNewProductsPriceModule = (function () {
         isApproved: false,
       };
 
+      if(!priceInfo.price) {
+        toastr.error("Va rugam sa indicati pretul!");
+        return;
+      } else if(!priceInfo.image) {
+        toastr.error("Va rugam sa selectati imaginea!");
+        return;
+      }
+      // } else if (typeof priceInfo.price != "number") {
+      //   toastr.error("Va rugam sa introduceti pretul in valori numerice!");
+      //   return;
+      // }
+
       $.post("/prices/suggestPrice", priceInfo, function (json) {
-        console.log(json);
-        location.reload();
+        console.log(json);   
+        toastr.success("In curind informatia Dvs va fi verificata!", "Va multumim!"); 
+        setTimeout(function() {location.reload()}, 2000);
       });
   }
 

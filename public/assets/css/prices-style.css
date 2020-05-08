@@ -18,3 +18,7 @@
 body.modal-open{
     overflow:hidden;
 }
+
+.text-coral {
+  color: #ff8282 !important;
+}
