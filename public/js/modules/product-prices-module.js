@@ -48,7 +48,7 @@ var AddNewProductsPriceModule = (function () {
         canvas.height = height;
         let ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, width, height);
-        resolve(canvas.toDataURL('image/jpeg', 0.9));
+        resolve(canvas.toDataURL("image/jpeg", 0.9));
       };
     });
   };
@@ -57,31 +57,31 @@ var AddNewProductsPriceModule = (function () {
     var imgData = self.acqImageFile;
 
     var priceInfo = {
-        price: $("#price").val(),
-        productId: $("#product-id").val(),
-        shopId: $("#shop-id").val(),
-        date: currentDate(),
-        image: imgData,
-        isApproved: false,
-      };
+      price: $("#price").val(),
+      productId: $("#product-id").val(),
+      shopId: $("#shop-id").val(),
+      date: currentDate(),
+      image: imgData,
+      isApproved: false,
+    };
 
-      if(!priceInfo.price) {
-        toastr.error("Va rugam sa indicati pretul!");
-        return;
-      } else if(!priceInfo.image) {
-        toastr.error("Va rugam sa selectati imaginea!");
-        return;
-      }
-      // } else if (typeof priceInfo.price != "number") {
-      //   toastr.error("Va rugam sa introduceti pretul in valori numerice!");
-      //   return;
-      // }
+    if (!priceInfo.price) {
+      toastr.error("Va rugam sa indicati pretul!");
+      return;
+    } else if (!priceInfo.image) {
+      toastr.error("Va rugam sa selectati imaginea!");
+      return;
+    }
 
-      $.post("/prices/suggestPrice", priceInfo, function (json) {
-        console.log(json);   
-        toastr.success("In curind informatia Dvs va fi verificata!", "Va multumim!"); 
-        setTimeout(function() {location.reload()}, 2000);
+    $.post("/prices/suggestPrice", priceInfo, function () {
+      $("#exampleModal").modal("hide");
+
+      Swal.fire({
+        icon: "success",
+        title: "Va multumim!",
+        text: "In curind informatia Dvs va fi verificata!"
       });
+    });
   }
 
   // Public functions

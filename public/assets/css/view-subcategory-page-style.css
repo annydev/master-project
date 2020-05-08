@@ -54,6 +54,7 @@
     border: none;
     cursor: default;
     color: gray;
+    box-shadow: none;
 }
 
 .subcategory-p {
