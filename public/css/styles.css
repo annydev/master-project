@@ -34,5 +34,6 @@ label.error {
   }
 
   .support-email {
-    color: #cfe4fa;
+    text-decoration: underline;
+    color: #ffffff;
   }
