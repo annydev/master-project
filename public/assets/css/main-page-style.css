@@ -58,6 +58,7 @@ html {
   position: relative;
   padding: 50%;
   background-size: cover;
+  background-position: center;
   cursor: pointer;
   box-shadow: 2px 4px 16px #e9ecef;
 }

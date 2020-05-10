@@ -67,8 +67,8 @@ router.post("/edit", async(req, res) => {
 
 router.post("/add", async(req, res) => {
     let newCategory = {
-        title: req.body.category,
-        image: req.body.image
+        title: req.body.titleCategory,
+        image: req.body.categoryImage
     };
 
     let foundCategory = await categoriesRepository.findCategory(newCategory.title);
