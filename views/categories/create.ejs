@@ -4,28 +4,28 @@
 <% script('/js/modules/add-category-module.js') -%>
 
 <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Add new category</h1>
-        <div class="input-group-append">
-            <button class="btn btn-primary category-save" type="submit" id="button-addon2">Save</button>
-        </div>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Add new category</h1>
+    <div class="input-group-append">
+        <button class="btn btn-primary category-save" type="submit" id="button-addon2">Save</button>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" id="category" placeholder="title of the category"
-                    aria-label="Recipient's username" aria-describedby="button-addon2">
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="category" placeholder="title of the category"
+                aria-label="Recipient's username" aria-describedby="button-addon2">
+        </div>
+        <div class="input-group mb-3">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="categoryImage">
+                <label class="custom-file-label" for="customFile">Choose file</label>
             </div>
-            <div class="input-group mb-3">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="categoryImage">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
-                  </div>
-                <div class="input-group-prepend">
-                </div>
-            </div>
-            <div>
-                <img id="imagePreview" class="img-fluid d-none" alt="Responsive image">
+            <div class="input-group-prepend">
             </div>
         </div>
+        <div>
+            <img id="imagePreview" class="img-fluid d-none" alt="Responsive image">
+        </div>
     </div>
+</div>

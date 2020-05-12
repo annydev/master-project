@@ -34,6 +34,10 @@ label.error {
   }
 
   .support-email {
+    color: #ffffff;
+  }
+
+  .support-email:hover {
     text-decoration: underline;
     color: #ffffff;
   }

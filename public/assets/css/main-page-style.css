@@ -30,12 +30,14 @@ html {
 .see-categories {
   background-color: #80b82d;
   color: white;
+  padding: 14px;
 }
 
 .see-categories:hover {
   background-color: white;
   color: #80b82d;
   border: 1px solid #80b82d;
+  padding: 14px;
 }
 
 .grid-style {

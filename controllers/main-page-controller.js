@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 
+const moment = require('moment');
+
 const categoriesRepository = require("../repositories/categories-repository");
 const productsRepository = require("../repositories/products-repository");
 const shopsRepository = require("../repositories/shops-repository");
@@ -85,11 +87,11 @@ router.get("/price/:id", async (req, res) => {
 
     dbLastPrice = await pricesRepository.GetLastPriceByDate(shop._id, productId);
 
-
     let priceDetails = {
       shopId: shop._id,
       shopName: shop.title,
       lastPrice: !!dbLastPrice ? dbLastPrice.price + "MDL" : "",
+      lastDate: !!dbLastPrice ? moment(dbLastPrice.date).format('DD.MM.YYYY') : ""
     };
 
     dbProductPrices.push(priceDetails);

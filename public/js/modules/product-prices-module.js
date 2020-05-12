@@ -89,10 +89,12 @@ var AddNewProductsPriceModule = (function () {
   self.Init = function () {
     $(".suggest-price").click((e) => {
       let productId = $(".product").val();
-      let shopId = $(e.currentTarget).closest("li").data("id");
+      let shopId = $(e.currentTarget).data("id");
 
       $("#product-id").val(productId);
       $("#shop-id").val(shopId);
+
+      $('#exampleModal').modal("show");
     });
 
     $("button.save-modal-content").click(() => {

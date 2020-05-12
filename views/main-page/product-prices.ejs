@@ -19,30 +19,48 @@ stylesheet('/assets/css/prices-style.css') -%>
         <p><%= product.description %></p>
       </div>
     </div>
-    <div class="text-center mb-4 my-4">
-      <h1>Magazinele in care gasiti acest produs</h1>
+    <div class="text-center mb-5 my-5">
+      <h1>Magazinele în care găsiți acest produs</h1>
     </div>
-    <ul class="list-group my-5">
-      <% prices.forEach(function(price) { %>
-      <li data-id="<%= price.shopId %>" class="list-group-item d-flex justify-content-between align-items-center">
-        <span><%= price.shopName %></span>
-        <% if (!!price.lastPrice) { %>
+    <!-- <ul class="list-group my-5">
+      <li  class="list-group-item d-flex justify-content-between align-items-center">
+        <span></span>
+        
         <span class="font-weight-bold">
-          <%= price.lastPrice %>
+          
         </span>
-        <% } else { %>
+        
         <!-- Button trigger modal -->
-        <a class="suggest-price" data-toggle="modal" href="#exampleModal">
-          <span> + sugereaza pretul</span>
-        </a>
+        <!-- 
+          
+         -->
+    <table class="mb-5" style="width: 100%;">
+      <tr>
+        <th>Magazine</th>
+        <th style="width: 1px">Preț</th>
+        <th style="width: 1px;">Data</th>
+        <th style="width: 1px;"></th>
+      </tr>
+      <% prices.forEach(function(price) { %>
+      <tr>
+        <td><%= price.shopName %></td>
+        <% if (!!price.lastPrice) { %>
+        <td class="last-three-cells"><%= price.lastPrice %></td>
+        <td class="last-three-cells"><%= price.lastDate %></td>
+        <td class="last-three-cells suggest-price suggest-price-cell" data-id="<%= price.shopId %>" title="sugereaza pretul">
+          <span class="plus-sign">+</span>
+        </td>
+        <% } else { %>
+        <td class="last-three-cells suggest-price suggest-price-without-date" colspan="3" data-id="<%= price.shopId %>">
+          <span> + sugereaza prețul </span>
+        </td>
         <% } %>
-      </li>
+      </tr>
       <% }); %>
-    </ul>
+    </table>
   </div>
 </section>
 <!-- END section -->
-
 <!-- The Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
