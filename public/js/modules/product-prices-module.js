@@ -79,7 +79,7 @@ var AddNewProductsPriceModule = (function () {
       Swal.fire({
         icon: "success",
         title: "Va multumim!",
-        text: "In curind informatia Dvs va fi verificata!"
+        text: "In curind informatia Dvs va fi verificata!",
       });
     });
   }
@@ -94,11 +94,20 @@ var AddNewProductsPriceModule = (function () {
       $("#product-id").val(productId);
       $("#shop-id").val(shopId);
 
-      $('#exampleModal').modal("show");
+      $("#exampleModal").modal("show");
     });
 
     $("button.save-modal-content").click(() => {
       suggestedPrice();
+    });
+
+    $("[data-dismiss=modal]").on("click", function (e) {
+      var $t = $(this);
+      var target =
+        $t[0].href || $t.data("target") || $t.parents(".modal") || [];
+
+      $(target).find("input").val("").end();
+      $(target).find("#imagePreview").addClass("d-none");;
     });
 
     $("#image").on("change", function (e) {

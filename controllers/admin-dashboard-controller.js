@@ -9,4 +9,8 @@ router.get("/dashboard", async (req, res) => {
     res.render("dashboard/dashboard");
 });
 
+router.get("/", async (req, res) => {
+    res.redirect("/admin/dashboard");
+});
+
 module.exports = router;
