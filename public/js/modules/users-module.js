@@ -1,7 +1,7 @@
 var UsersModule = (function() {
     // Preperties
 
-    var self = this;
+    var self = {};
 
     // Private functions
   

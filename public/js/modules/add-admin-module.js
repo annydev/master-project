@@ -1,9 +1,9 @@
 var AddUsersModule = (function () {
   // Preperties
 
-  var self = this;
+  var self = {
 
-  
+  };
 
   // Public functions
 

@@ -1,7 +1,7 @@
 var ShopsModule = (function() {
     // Preperties
 
-    var self = this;
+    var self = {};
 
     // Private functions
   

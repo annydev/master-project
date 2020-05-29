@@ -1,7 +1,7 @@
 var CategoriesModule = (function () {
     // Properties
 
-    var self = this;
+    var self = {};
 
     // Private functions
 

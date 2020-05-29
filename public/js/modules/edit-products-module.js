@@ -1,7 +1,7 @@
 var EditProductsModule = (function () {
     // Preperties
 
-    var self = this;
+    var self = {};
 
     // Private functions
     function currentDate() {

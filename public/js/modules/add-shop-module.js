@@ -1,7 +1,7 @@
 var AddShopsModule = (function () {
     // Preperties
   
-    var self = this;
+    var self = {};
   
     
   

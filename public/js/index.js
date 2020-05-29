@@ -1,153 +1,48 @@
+var NotificationsModule = (function () {
+  // Properties
 
-// $(function () {
-//     $("#submit").click(function () {
-//         var password = $("#exampleInputPassword").val();
-//         var confirmPassword = $("#exampleRepeatPassword").val();
+  var self = {};
 
-//         if (password != confirmPassword) {
-//             alert("Passwords Don't Match");
-//             return false;
-//         }
-//         return true;
-//     });
-// });
+  // Private functions
 
+  function findNotifications() {
+    $.post("dashboard/notifications", function (json) {
+      $("#links").html("");
 
-// making post request to delete item using the id of the item from the client-side and then send this to server.
+      if (json.prices.length > 0) {
+        json.prices.forEach(function (sugestedPrice) {
+          let div = `<div class="mr-3">
+            <div class="icon-circle bg-success">
+                 <i class="fas fa-donate text-white"></i>
+                </div>
+            </div>
+            <div>
+            <div class="small text-gray-500">Vezi noul pret propus:</div>
+            <span class="font-weight-bold"> ${sugestedPrice.productName} </span>
+            <h6>${sugestedPrice.price} lei</h6>
+            <span class="font-weight-bold">Data: ${sugestedPrice.date}</span>
+          </div>`;
 
-// $("button.delete").click(function () {
-//     var data = {
-//         id: this.dataset.id
-//     };
+          $("#links").append($(`<a href="/admin/products/edit/${sugestedPrice.productId}" class="dropdown-item d-flex align-items-center" value="">${div}</a>`));
+        });
 
-//     $.post("/admin/categories/delete", data, function (result) { //result came from server
-//         location.reload();
-//     });
-// });
+        let notificationsCount = json.prices.length;
 
-// $("button.delete-price").click(function () {
-//     var data = {
-//         id: this.dataset.id
-//     };
+        $(".notifications").append($(`<span class="badge badge-danger badge-counter">${notificationsCount}+</span>`));
+      } else {
+        console.log("error found");
+      }
+    });
+  }
 
-//     $.post("/admin/prices/delete", data, function () { //result came from server
-//         location.reload();
-//     });
-// });
+  // Public functions
 
-// $("button.delete-product").click(function () {
-//     var data = {
-//         id: this.dataset.id
-//     };
+  self.Init = function () {
+    findNotifications();
+  };
+  return self;
+})();
 
-//     $.post("/admin/product/delete", data, function () { //result came from server
-//         location.reload();
-//     });
-// });
-
-// $("button.del").click(function () {
-//     var data = {
-//         id: this.dataset.id
-//     };
-
-//     $.post("/admin/shops/delete", data, function (result) {
-//         location.reload();
-//     });
-// });
-
-// $("button.add-subcategory").click(function () {
-//     let data = {
-//         subId: $("#subId").val(),
-//         titleSubcategory: $("#titleSubcategory").val()
-//     }
-
-//     $.post("/admin/categories/addSubcategory", data, function (json) {
-//         location.reload();
-//     });
-// });
-
-// $("button.delete-subcategory").click(function () {
-//     var data = {
-//         subId: $("#subId").val()
-//     }
-//     $.post("/admin/categories/deleteSubcategory", data, function (json) {
-//         location.reload();
-//     });
-// });
-
-// $("button.product-save").click(function () {
-//     let resultCategoryId;
-//     let categoryId = $("#categoryTitle").val();
-//     let subcategoryId = $("#subcategoryTitle").val();
-
-//     if (subcategoryId === null) {
-//         resultCategoryId = categoryId
-//     } else {
-//         resultCategoryId = subcategoryId
-//     }
-
-//     var data = {
-//         titleProduct: $("#product").val(),
-//         productCategory: resultCategoryId,
-//         productImage:$("#imageURLProduct").val()
-//     }
-//     $.post("/addProduct", data, function (json) {
-//         console.log(json);
-//         window.location.href = "/admin/products";
-//     });
-    
-// });
-
-// $(".add-price").click(function() {
-//     function currentDate() {
-//         var date = new Date();
-//         return date;
-//     }
-//     var data = {
-//         price: $("#price").val(),
-//         productId: $("#product-id").val(),
-//         shopId: $("#shop-id").val(),
-//         date: currentDate("ru")
-//     }
-
-//     $.post("/admin/prices/add", data, function(json) {
-//         console.log(json)
-//         location.reload();
-//     });
-// });
-
-// $("#categoryTitle").on("change", function (e) {
-//     let data = {
-//         categoryId: $("#categoryTitle").val()
-//     }
-
-//     $.post("/admin/getSubcategories", data, function (json) {
-//         $('#subcategoryTitle').html("");
-
-//         if (json.subcategories.length > 0) {
-//             $('#subcategoryTitle').removeClass("d-none");
-//             $('#subcategoryTitle').append("<option selected disabled>Choose subcategory</option>")
-
-//             json.subcategories.forEach(function (subcategory) {
-//                 $('#subcategoryTitle').append($(`<option value="${subcategory._id}">${subcategory.title}</option>`));
-//             });
-//         } else {
-//             $('#subcategoryTitle').addClass("d-none");
-//         }
-//     });
-// });
-
-
-// var password = document.getElementById("exampleInputPassword")
-//   , confirmPassword = document.getElementById("exampleRepeatPassword");
-
-// function validatePassword(){
-//   if(password.value != confirmPassword.value) {
-//     confirmPassword.setCustomValidity("Passwords Don't Match");
-//   } else {
-//     confirmPassword.setCustomValidity('');
-//   }
-// }
-
-// password.onchange = validatePassword;
-// confirmPassword.onkeyup = validatePassword;
+$(document).ready(function () {
+  NotificationsModule.Init();
+});

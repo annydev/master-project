@@ -49,6 +49,16 @@ const PricesRepository = (function () {
         });
     }
 
+    self.GetByStatusFalse = () => {
+        return new Promise ((resolve) => {
+            Price.find({ isApproved: "false" }, function (err, prices) {
+                if (!err) {
+                    resolve(prices)
+                } 
+            });
+        });
+    }
+
     self.Create = (data) => {
         return new Promise((resolve) => {
             const newPrice = new Price(data);

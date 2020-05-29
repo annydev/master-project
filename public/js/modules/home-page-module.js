@@ -1,7 +1,7 @@
 var HomePageModule = (function() {
     // Preperties
 
-    var self = this;
+    var self = {};
 
     // Private functions 
 

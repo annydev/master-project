@@ -1,7 +1,7 @@
 var EditCategoriesModule = (function () {
     // Properties
 
-    var self = this;
+    var self = {};
 
     // Private functions
 
