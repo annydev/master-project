@@ -9,7 +9,7 @@ var NotificationsModule = (function () {
     $.post("/admin/dashboard/notifications", function (json) {
       $("#links").html("");
 
-      if (json.prices.length > 0) {
+      if (json.prices.length > 0 || json.products.length > 0) {
         json.prices.forEach(function (sugestedPrice) {
           let div = `<div class="mr-3">
             <div class="icon-circle bg-success">
@@ -25,10 +25,29 @@ var NotificationsModule = (function () {
           $("#links").append($(`<a href="/admin/products/edit/${sugestedPrice.productId}" class="dropdown-item d-flex align-items-center" value="">${div}</a>`));
         });
 
-        let notificationsCount = json.prices.length;
+        json.products.forEach(function (sugestedProduct) {
+          let div = `<div class="mr-3">
+            <div class="icon-circle bg-primary">
+              <i class="fas fa-file-alt text-white"></i>
+                </div>
+            </div>
+            <div>
+            <div class="small text-gray-500">${sugestedProduct.date}</div>
+            <span class="font-weight-bold">  </span>
+            <h6>${sugestedProduct.product}</h6>
+          </div>`;
 
-        $(".notifications").append($(`<span class="badge badge-danger badge-counter">${notificationsCount}+</span>`));
-      } else {
+          $("#links").append($(`<a href="/admin/products/edit/${sugestedProduct.id}" class="dropdown-item d-flex align-items-center" value="">${div}</a>`));
+        });
+
+        let notificationsPricesCount = json.prices.length;
+        let notificationsProductsCount = json.products.length;
+        let sumNotifications = notificationsPricesCount +  notificationsProductsCount
+
+        $(".notifications").append($(`<span class="badge badge-danger badge-counter">${sumNotifications} +</span>`));
+
+      } 
+      else {
         console.log("error found");
       }
     });

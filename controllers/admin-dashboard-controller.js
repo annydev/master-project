@@ -19,7 +19,9 @@ router.get("/", async (req, res) => {
 router.post("/dashboard/notifications", async (req, res) => {
 
     let dbPricesWithStatusFalse = await pricesRepository.GetByStatusFalse();
+    let dbProductsWithStatusFalse = await productsRepository.GetByStatusFalse();
     let resultPrices = [];
+    let resultProducts = [];
 
     for (let i = 0; i < dbPricesWithStatusFalse.length; i++) {
         const currentPriceStatusFalse = dbPricesWithStatusFalse[i];
@@ -34,8 +36,19 @@ router.post("/dashboard/notifications", async (req, res) => {
         });
     }
 
+    for (let i = 0; i < dbProductsWithStatusFalse.length; i++) {
+        const currentProductStatusFalse = dbProductsWithStatusFalse[i];
+
+        resultProducts.push({
+            id: currentProductStatusFalse._id,
+            product: currentProductStatusFalse.title,
+            date: moment(currentProductStatusFalse.date).format('DD.MM.YYYY, k:mm:ss')
+        });
+    }
+
     res.json({
-        prices: resultPrices
+        prices: resultPrices,
+        products: resultProducts
     });
 });
 

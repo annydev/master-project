@@ -103,6 +103,16 @@ const ProductsRepository = (function () {
         });
     }
 
+    self.GetByStatusFalse = () => {
+        return new Promise ((resolve) => {
+            Product.find({ isApproved: "false" }, function (err, products) {
+                if (!err) {
+                    resolve(products)
+                } 
+            });
+        });
+    }
+
 
     return self;
 })();
