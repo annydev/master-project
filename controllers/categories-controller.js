@@ -53,7 +53,8 @@ router.get("/add", async(req, res) => {
 router.post("/edit", async(req, res) => {
     var id = req.body.id;
     var data = {
-        title: req.body.title
+        title: req.body.title,
+        image: req.body.image
     }
 
     let result = await categoriesRepository.Update(id, data);
