@@ -39,7 +39,7 @@ const ProductsRepository = (function () {
 
     self.GetAllByCategoryIds = (ids) => {
         return new Promise ((resolve) => {
-             Product.find({ categoryId: { $in: ids } }, function (err, products) {
+             Product.find({$and: [{ categoryId: { $in: ids } }, {isApproved: true}]}, function (err, products) {
                 if (!err) {
                    resolve(products)
                 } 
@@ -57,9 +57,27 @@ const ProductsRepository = (function () {
         });
     }
 
+    self.CreateStatusFalse = (data) => {
+        return new Promise((resolve) => {
+            const newProduct = new Product(data);
+
+            newProduct.save(function (err) {
+                resolve(getResult(err));
+            });
+        })
+    }
+
     self.Update = (id, data) => {
         return new Promise ((resolve) => {
             Product.findByIdAndUpdate({ _id: id }, data, { new: true }, function (err) {
+               resolve(getResult(err))
+            });
+        });
+    }
+
+    self.UpdateStatus = (id) => {
+        return new Promise ((resolve) => {
+            Product.findByIdAndUpdate({ _id: id }, {isApproved: true, date: new Date()}, { new: true }, function (err) {
                resolve(getResult(err))
             });
         });

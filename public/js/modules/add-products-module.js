@@ -5,6 +5,10 @@ var AddProductsModule = (function () {
     acqImageFile: "",
   };
   // Private functions
+  function currentDate() {
+    var date = new Date();
+    return date;
+}
 
   function convertToBase64(file, cb) {
     var reader = new FileReader();
@@ -65,6 +69,7 @@ var AddProductsModule = (function () {
       productDescription: $("#description").val(),
       productCategory: resultCategoryId,
       productImage: imgData,
+      date: currentDate()
     };
 
     if (!data.titleProduct) {

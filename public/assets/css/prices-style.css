@@ -51,6 +51,7 @@ th {
 
 .suggest-price-without-date {
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .suggest-price-without-date:hover {

@@ -15,6 +15,16 @@ var ProductsModule = (function() {
         });
     }
 
+    function updateProductStatus(id) {
+        var data = {
+            id: id
+        };
+
+        $.post("/admin/products/statusUpdate", data, function () {
+            location.reload();
+        });
+    }
+
     // Public functions
   
     self.Init = function() {
@@ -23,6 +33,12 @@ var ProductsModule = (function() {
 
             deleteProduct(id) 
         });
+
+        $("button.update-product-status").click((e) => { 
+            let id = $(e.currentTarget).data("id");
+
+            updateProductStatus(id) 
+        });  
     };
 
     return self;

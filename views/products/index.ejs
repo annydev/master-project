@@ -23,6 +23,7 @@
             <th>Product category</th>
             <th>Product subcategory</th>
             <th>Last price</th>
+            <th>Status</th>
             <th style="width: 1px;"></th>
           </tr>
         </thead>
@@ -33,13 +34,19 @@
             <td><%= product.categoryTitle %></td>
             <td><%= product.subcategoryTitle %></td>
             <td><%= product.lastPrice %></td>
+            <td><%= product.isApproved %></td>
             <td>
               <div class="btn-group" role="group" aria-label="Basic example">
+                <% if (!product.isApproved) { %>
+                  <button class="update-product-status btn btn-primary btn-sm" data-id="<%= product.id %>">
+                    <i class="fas fa-check"></i>
+                  </button>
+                <% } %>         
                 <a href="/admin/products/edit/<%= product.id %>" class="edit btn btn-success btn-sm">
-                  <i class="fas fa-edit"></i></a>
-                <button class="delete-product btn btn-danger btn-sm" data-id="<%= product.id %>">
-                  <i class="fas fa-trash"></i>
-                </button>
+                  <i class="fas fa-edit"></i></a>   
+                  <button class="delete-product btn btn-danger btn-sm" data-id="<%= product.id %>">
+                    <i class="fas fa-trash"></i>
+                  </button>         
               </div>
             </td>
           </tr>

@@ -30,6 +30,7 @@ router.get("/", async (req, res) => {
         resultProducts.push({
             id: product._id,
             title: product.title,
+            isApproved: product.isApproved,
             categoryTitle: dbCategory.title,
             subcategoryTitle: !!dbSubcategory ? dbSubcategory.title : '',
             lastPrice: !!dbLastPrice ? dbLastPrice.price : ""
@@ -115,7 +116,9 @@ router.post("/add", async (req, res) => {
         title: req.body.titleProduct,
         description: req.body.productDescription,
         categoryId: req.body.productCategory,
-        imageURL: req.body.productImage
+        imageURL: req.body.productImage,
+        isApproved: true,
+        date: req.body.date
     }
 
     let foundProduct = await productsRepository.findProduct(newProduct.title);
@@ -133,6 +136,14 @@ router.post("/delete", async (req, res) => {
     let productId = req.body.id;
 
     let result = await productsRepository.Delete(productId)
+
+    res.json(result);
+});
+
+router.post("/statusUpdate", async (req, res) => {
+    let productId = req.body.id;
+
+    let result = await productsRepository.UpdateStatus(productId)
 
     res.json(result);
 });

@@ -37,7 +37,7 @@ var EditProductsModule = (function () {
             id: id
         };
 
-        $.post("/admin/prices/delete", data, function () { //result came from server
+        $.post("/admin/prices/delete", data, function () { 
             location.reload();
         });
     }
@@ -47,7 +47,7 @@ var EditProductsModule = (function () {
             id: id
         };
 
-        $.post("/admin/prices/statusUpdate", data, function () { //result came from server
+        $.post("/admin/prices/statusUpdate", data, function () {
             location.reload();
         });
     }

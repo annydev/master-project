@@ -32,7 +32,7 @@ router.get("/category/:id", async (req, res) => {
     });
   }
 
-  let dbProducts = await productsRepository.GetAllByCategoryIds(allIds);
+  let dbProducts = await productsRepository.GetAllByCategoryIds(allIds); 
 
   let result = {
     category: dbCategory,
@@ -120,5 +120,21 @@ let result = await pricesRepository.CreateStatusFalse(newPrice)
 
 res.json(result);
 });
+
+router.post("/product/suggestProduct", async(req, res) => {
+  let newProduct = {
+    title: req.body.productName,
+    description: "New product suggested!",
+    categoryId: req.body.categoryId,
+    imageURL: "Need to add image!",
+    isApproved: false,
+    date: req.body.date
+  }
+
+let result = await productsRepository.CreateStatusFalse(newProduct)
+
+res.json(result);
+});
+
 
 module.exports = router;

@@ -6,7 +6,7 @@ var NotificationsModule = (function () {
   // Private functions
 
   function findNotifications() {
-    $.post("dashboard/notifications", function (json) {
+    $.post("/admin/dashboard/notifications", function (json) {
       $("#links").html("");
 
       if (json.prices.length > 0) {
@@ -17,10 +17,9 @@ var NotificationsModule = (function () {
                 </div>
             </div>
             <div>
-            <div class="small text-gray-500">Vezi noul pret propus:</div>
+            <div class="small text-gray-500">${sugestedPrice.date}</div>
             <span class="font-weight-bold"> ${sugestedPrice.productName} </span>
             <h6>${sugestedPrice.price} lei</h6>
-            <span class="font-weight-bold">Data: ${sugestedPrice.date}</span>
           </div>`;
 
           $("#links").append($(`<a href="/admin/products/edit/${sugestedPrice.productId}" class="dropdown-item d-flex align-items-center" value="">${div}</a>`));

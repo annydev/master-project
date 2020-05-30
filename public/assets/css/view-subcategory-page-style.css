@@ -89,6 +89,14 @@
     background-position: center;
 }
 
+.image-plus {
+    width: 30px;
+}
+
+.card-plus-sign {
+    background-color: #f3f4f5;
+}
+
 .first-card-p {
     margin-bottom: 4px;
     font-size: 13px;

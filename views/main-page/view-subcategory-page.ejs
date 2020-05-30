@@ -2,7 +2,7 @@
 <% block('title', "Products page") -%>
 <% stylesheet('/assets/css/view-subcategory-page-style.css') -%>
 
-
+<% script('/js/modules/suggest-product-module.js') -%>
 <!-- END nav -->
 
 <section class="pb_section about-section pb-0" id="section-about">
@@ -46,7 +46,36 @@
                 </div>   
             </a>
             <% }); %>
+            <button title="sugereaza un nou produs" data-id="<%= subcategory._id %>" class="card suggest-product product-card card-plus-sign m-0 d-flex flex-column">
+                <div class="card-img-top cards-images d-flex align-items-center justify-content-center">
+                    <img class="image-plus" src="/images/plus.svg" alt="">
+                </div>
+            </button>
         </div>
     </div>
 </section>
+<!-- The Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Sugereaza noul pret al produsului</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col">
+            <input type="hidden" id="category-id">
+            <label for="product">Propune noul produs:<span class="text-coral">*</span></label>
+            <input type="text" min="1" id="product" class="d-block mb-3 form-control" placeholder="denumirea produsului">
+          </div>    
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
+          <button type="button" class="btn btn-primary save-modal-content">Salveaza</button>
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- END section -->

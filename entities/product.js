@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
         title: String,
         description: String,
         categoryId: String,
-        imageURL: String
+        imageURL: String,
+        isApproved: Boolean,
+        date: Date
     });
 
     let object = mongoose.model("Product", schema);
