@@ -99,7 +99,9 @@ router.post("/getSubcategories", async (req, res) => {
 router.post("/edit", async (req, res) => {
     var id = req.body.id;
     var data = {
-        title: req.body.title
+        title: req.body.title,
+        description: req.body.description,
+        imageURL: req.body.imageURL
     };
 
     let result = await productsRepository.Update(id, data);

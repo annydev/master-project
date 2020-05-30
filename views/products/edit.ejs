@@ -4,28 +4,44 @@
 <% script('/js/modules/edit-products-module.js') -%>
 
 <!-- Page Heading -->
-<form class="user" action="/admin/products/edit" method="post">
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Edit product name</h1>
-  <div class="input-group-append">
-    <button class="btn btn-primary" type="submit" id="button-addon2">Save</button>
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Edit product name</h1>
+    <div class="input-group-append">
+      <button class="btn btn-primary updated-product-save" type="submit" id="button-addon2">Save</button>
+    </div>
   </div>
-</div>
   <div class="card">
     <div class="card-body">
       <div class="input-group mb-3">
-        <input type="hidden" name="id" value="<%= product._id %>" id="product-id">
-        <input type="text" class="form-control editCategory" name="title" aria-label="Recipient's username"
-          aria-describedby="button-addon2" value="<%= product.title %>">       
+        <input type="hidden" value="<%= product._id %>" id="product-id">
+        <input type="text" class="form-control editCategory" id="product-title" aria-label="Recipient's username"
+          aria-describedby="button-addon2" value="<%= product.title %>">
+      </div>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control editCategory" id="description" aria-label="Recipient's username"
+          aria-describedby="button-addon2" value="<%= product.description %>">
+      </div>
+      <div class="input-group mb-3">
+        <div class="custom-file">
+          <input type="file" id="imageURL" class="custom-file-input">
+          <label class="custom-file-label" for="customFile">Choose file</label>
+        </div>
+        <div class="input-group-prepend">
+        </div>
+      </div>
+      <div>
+        <img id="previous-product-image" class="img-fluid" src="<%= product.imageURL %>">
+      </div>
+      <div>
+        <img id="imagePreview" class="img-fluid d-none" alt="Responsive image">
       </div>
     </div>
   </div>
-</form>
 <div class="my-4 d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">Prices section</h1>
   <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm add-price">
     <i class=" fas fa-plus fa-sm text-white-50"></i>
-    Add new 
+    Add new
   </button>
 </div>
 <div class="card">
@@ -76,15 +92,15 @@
                 <button class="view-image btn btn-secondary" data-src="<%= price.image %>">
                   <i class="fas fa-image"></i>
                 </button>
-              <% } %>
+                <% } %>
                 <% if (!price.status) { %>
-                  <button class="update-price-status btn btn-success btn-sm" data-id="<%= price.id %>">
-                    <i class="fas fa-check"></i>
-                  </button>
+                <button class="update-price-status btn btn-success btn-sm" data-id="<%= price.id %>">
+                  <i class="fas fa-check"></i>
+                </button>
                 <% } %>
                 <button class="delete-price btn btn-danger btn-sm" data-id="<%= price.id %>">
                   <i class="fas fa-trash"></i>
-                </button>               
+                </button>
               </div>
             </td>
           </tr>
