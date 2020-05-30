@@ -26,10 +26,11 @@
         </div>
       </div>
       <div>
-        <img id="previous-category-image" class="img-fluid" src="<%= category.image %>">
-      </div>
-      <div>
-        <img id="imagePreview" class="img-fluid d-none" alt="Responsive image">
+        <% if (category.image) { %>
+        <img id="imagePreview" class="img-fluid" style="height: 200px;" src="<%= category.image %>" alt="Responsive image">
+        <% } else { %>
+        <img id="imagePreview" class="img-fluid d-none" style="height: 200px;" alt="Responsive image">
+        <% } %>
       </div>
     </div>
   </div>

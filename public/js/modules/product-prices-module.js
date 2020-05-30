@@ -74,7 +74,7 @@ var AddNewProductsPriceModule = (function () {
     }
 
     $.post("/prices/suggestPrice", priceInfo, function () {
-      $("#exampleModal").modal("hide");
+      $("#sugest-price-modal").modal("hide");
 
       Swal.fire({
         icon: "success",
@@ -94,21 +94,17 @@ var AddNewProductsPriceModule = (function () {
       $("#product-id").val(productId);
       $("#shop-id").val(shopId);
 
-      $("#exampleModal").modal("show");
+      $("#sugest-price-modal").modal("show");
     });
 
     $("button.save-modal-content").click(() => {
       suggestedPrice();
     });
 
-    $("[data-dismiss=modal]").on("click", function (e) {
-      var $t = $(this);
-      var target =
-        $t[0].href || $t.data("target") || $t.parents(".modal") || [];
-
-      $(target).find("input").val("").end();
-      $(target).find("#imagePreview").addClass("d-none");;
-    });
+    $('#sugest-price-modal').on('hidden.bs.modal', function (e) {
+      $('#sugest-price-modal').find("input").val("");
+      $('#sugest-price-modal').find("#imagePreview").addClass("d-none").attr("src", "");;
+  });
 
     $("#image").on("change", function (e) {
       e.preventDefault();

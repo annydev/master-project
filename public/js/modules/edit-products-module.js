@@ -171,7 +171,6 @@ var EditProductsModule = (function () {
               resizeImage(data).then((resizedImage) => {
                 self.acqImageFile = resizedImage; // store reference to file
                 $("#imagePreview").removeClass("d-none");
-                $("#previous-category-image").addClass("d-none");
                 $("#imagePreview").attr("src", resizedImage);
               });
             });

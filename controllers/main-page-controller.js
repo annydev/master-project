@@ -126,7 +126,7 @@ router.post("/product/suggestProduct", async(req, res) => {
     title: req.body.productName,
     description: "New product suggested!",
     categoryId: req.body.categoryId,
-    imageURL: "Need to add image!",
+    imageURL: "",
     isApproved: false,
     date: req.body.date
   }

@@ -24,7 +24,7 @@ var SuggestNewProductsModule = (function () {
       } 
   
       $.post("/product/suggestProduct", productInfo, function () {
-        $("#exampleModal").modal("hide");
+        $("#sugest-product-modal").modal("hide");
   
         Swal.fire({
           icon: "success",
@@ -42,19 +42,15 @@ var SuggestNewProductsModule = (function () {
 
           $("#category-id").val(categoryId);
   
-        $("#exampleModal").modal("show");
+        $("#sugest-product-modal").modal("show");
       });
   
       $("button.save-modal-content").click(() => {
         suggestedProduct();
       });
-  
-      $("[data-dismiss=modal]").on("click", function (e) {
-        var $t = $(this);
-        var target =
-          $t[0].href || $t.data("target") || $t.parents(".modal") || [];
-  
-        $(target).find("input").val("").end();
+
+      $('#sugest-product-modal').on('hidden.bs.modal', function (e) {
+          $('#sugest-product-modal').find("input").val("");
       });
     };
   
