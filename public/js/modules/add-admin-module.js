@@ -1,9 +1,30 @@
 var AddUsersModule = (function () {
   // Preperties
 
-  var self = {
+  var self = {};
 
-  };
+  // Public functions
+
+  function addAdmin() {
+
+    var data = {
+      username: $("#username").val(),
+      password:  $("#exampleInputPassword").val()
+    };
+
+    if (!data.username) {
+      toastr.error("Please fill username field!");
+      $("#username").addClass("input-error-border");
+      return;
+    } else if(!data.password) {
+      toastr.error("Please fill password field!");
+    }
+
+    $.post("add", data, function (json) {
+      console.log(json);
+      window.location.href = "/admin/users";
+    });
+  }
 
   // Public functions
 
@@ -17,44 +38,9 @@ var AddUsersModule = (function () {
 
         e.stopPropagation();
       } else {
-        $("#addUser").submit();
+        addAdmin();
       }
-    });
-
-    $(document).ready(function () {
-      jQuery.validator.addMethod('username_rule', function (value, element) {
-        if (/^[a-zA-Z0-9_-]+$/.test(value)) {
-          return true;
-        } else {
-          return false;
-        };
-      });
-      jQuery.validator.addMethod('email_rule', function (value, element) {
-        if (/^([a-zA-Z0-9_\-\.]+)\+?([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(value)) {
-          return true;
-        } else {
-          return false;
-        };
-      });
-      $('#addUser').validate({
-        rules: {
-          'username': {
-            required: true,
-            email_rule: true
-          },
-          'password': {
-            required: true,
-          },
-          'confirmPassword': {
-            required: true
-          }
-        },
-        messages: {
-          'username': "Va rugam sa introduceti corect adresa electronica",
-          'password': "Va rugam sa introduceti parola",
-          'confirmPassword': "Acest camp este obligatoriu"
-        }
-      });
+      
     });
   };
 

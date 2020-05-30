@@ -1,21 +1,21 @@
 <% layout('../shared/layouts/admin') -%>
 <% block('title', "Edit shop page") -%>
 
+<% script('/js/modules/edit-shops-module.js') -%>
+
 <!-- Page Heading -->
-<form class="user" action="/admin/shops/edit" method="post">
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">Edit shop name</h1>
   <div class="input-group-append">
-    <button class="btn btn-primary" type="submit" id="button-addon2">Save</button>
+    <button class="btn btn-primary updated-shop-save" type="submit" id="button-addon2">Save</button>
   </div>
 </div>
   <div class="card">
     <div class="card-body">
       <div class="input-group mb-3">
-        <input type="hidden" name="id" value="<%= shop._id %>">
-        <input type="text" class="form-control editCategory" name="title" aria-label="Recipient's username"
+        <input type="hidden" id="shop-id" value="<%= shop._id %>">
+        <input type="text" id="shop-title" class="form-control editCategory" aria-label="Recipient's username"
           aria-describedby="button-addon2" value="<%= shop.title %>">
       </div>
     </div>
   </div>
-</form>

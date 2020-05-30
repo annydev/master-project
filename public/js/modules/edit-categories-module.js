@@ -84,7 +84,7 @@ var EditCategoriesModule = (function () {
     
         if (!data.title) {
           toastr.error("Please fill title of the category!");
-          $("#category").addClass("input-error-border");
+          $("#category-title").addClass("input-error-border");
           return;
         } else if (!data.image) {
           toastr.error("Please choose the category image!");

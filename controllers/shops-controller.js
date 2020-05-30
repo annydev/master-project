@@ -52,7 +52,7 @@ router.post("/edit", async (req, res) => {
 
 router.post("/add", async (req, res) => {
     let newShop = {
-        title: req.body.shop
+        title: req.body.title
     };
 
     const foundShop = await shopsRepository.findShop(newShop.title);

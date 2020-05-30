@@ -4,20 +4,17 @@
 <% script('/js/modules/add-shop-module.js') -%>
 
 <!-- Page Heading -->
-<form class="user" id="add-shop" action="add" method="POST">
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Add new shop</h1>
     <div class="input-group-append">
-      <button class="btn btn-primary my-4" type="submit" id="button-addon2">Save</button>
+      <button class="btn btn-primary my-4 shop-save" type="submit" id="button-addon2">Save</button>
     </div>
   </div>
   <div class="card">
     <div class="card-body">
       <div class="form-group mb-3">
-        <label for="shop">Add shop<span class="text-coral">*</span></label>
-        <input type="text" class="form-control" name="shop" id="shopName" placeholder="title of the shop"
+        <input type="text" class="form-control" id="shopName" placeholder="title of the shop"
           aria-label="Recipient's username" aria-describedby="button-addon2" required>
       </div>
     </div>
   </div>
-</form>
