@@ -9,12 +9,6 @@
   background-position: center;
 }
 
-/* body {
-  height: 100vh;
-  overflow-y: hidden;
-  padding-right: 15px;
-} */
-
 body.modal-open{
     overflow:hidden;
 }
@@ -56,4 +50,12 @@ th {
 
 .suggest-price-without-date:hover {
   background-color: #f0f1ef;
+}
+
+.mailto {
+  color: #343a40;
+}
+
+.mailto:hover {
+  color: #80b82d;
 }

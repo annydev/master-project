@@ -39,6 +39,7 @@ router.get("/category/:id", async (req, res) => {
     
     let dbLastPriceOfProduct = await pricesRepository.GetLastByProductId(currentProduct._id);
     let resProd = {
+      id: currentProduct._id,
       title: currentProduct.title,
       imageURL: currentProduct.imageURL,
       lasPrice: !!dbLastPriceOfProduct ? dbLastPriceOfProduct.price + "MDL" : "",
@@ -83,6 +84,7 @@ router.get("/subcategory/:id", async (req, res) => {
     
     let dbLastPriceOfProduct = await pricesRepository.GetLastByProductId(currentProduct._id);
     let resProd = {
+      id: currentProduct._id,
       title: currentProduct.title,
       imageURL: currentProduct.imageURL,
       lasPrice: !!dbLastPriceOfProduct ? dbLastPriceOfProduct.price + "MDL" : "",
