@@ -11,6 +11,9 @@
   },
   "author": "Anny De",
   "license": "ISC",
+  "engines": {
+    "node": "12.14.1"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "ejs-locals": "^1.0.2",
