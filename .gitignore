@@ -104,7 +104,4 @@ dist
 .tern-port
 
 mongo-database/
-/node_modules
-npm-debug.log
 .DS_Store
-/*.env

@@ -4,8 +4,6 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "run-mongo-database": "md mongo-database & \"C:/Program Files/MongoDb/Server/4.2/bin/mongod.exe\" --dbpath mongo-database",
-    "access-mongo": "md mongo-database & \"C:/Program Files/MongoDb/Server/4.2/bin/mongo.exe\" mongo",
     "run": "nodemon server.js",
     "debug": "nodemon --inspect server.js"
   },

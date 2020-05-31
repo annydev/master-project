@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const engine = require("ejs-locals");
 const mongoose = require("mongoose");
-const { body, check, validationResult } = require('express-validator');
 
 const routing = require("./routing");
 
@@ -30,5 +29,5 @@ mongoose.set("useCreateIndex", true);
 routing.Init(app);
 
 app.listen(process.env.PORT || 3000, function () {
-  console.log("Server has started sucessefuly");
+  console.log("Server has started successfully");
 });
