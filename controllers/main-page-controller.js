@@ -32,12 +32,25 @@ router.get("/category/:id", async (req, res) => {
     });
   }
 
-  let dbProducts = await productsRepository.GetAllByCategoryIds(allIds); 
+  let dbProducts = await productsRepository.GetAllByCategoryIds(allIds);
+  let resultProd = [];
+  for (let i = 0; i < dbProducts.length; i++) {
+    const currentProduct = dbProducts[i];
+    
+    let dbLastPriceOfProduct = await pricesRepository.GetLastByProductId(currentProduct._id);
+    let resProd = {
+      title: currentProduct.title,
+      imageURL: currentProduct.imageURL,
+      lasPrice: !!dbLastPriceOfProduct ? dbLastPriceOfProduct.price + "MDL" : "",
+    }
+
+    resultProd.push(resProd)
+  }
 
   let result = {
     category: dbCategory,
     subcategories: dbSubcategories,
-    products: dbProducts,
+    products: resultProd,
   };
 
   res.render("main-page/view-category-page", result);
@@ -64,10 +77,24 @@ router.get("/subcategory/:id", async (req, res) => {
     subcategoryId,
   ]);
 
+  let resultProd = [];
+  for (let i = 0; i < dbProducts.length; i++) {
+    const currentProduct = dbProducts[i];
+    
+    let dbLastPriceOfProduct = await pricesRepository.GetLastByProductId(currentProduct._id);
+    let resProd = {
+      title: currentProduct.title,
+      imageURL: currentProduct.imageURL,
+      lasPrice: !!dbLastPriceOfProduct ? dbLastPriceOfProduct.price + "MDL" : "",
+    }
+
+    resultProd.push(resProd)
+  }
+
   let result = {
     subcategory: dbSubcategory,
     subcategories: subcategories,
-    products: dbProducts,
+    products: resultProd,
   };
 
   res.render("main-page/view-subcategory-page", result);

@@ -30,7 +30,7 @@
 
 <section class="pb_section" id="section-gallery">
     <div class="container">
-        <div class="card-deck cards">
+        <div class="card-deck cards px-3">
             <% products.forEach(product => { %>
             <a href="/price/<%= product._id %>" class="card product-card m-0 d-flex flex-column">
                 <div class="card-img-top cards-images" style="background-image: url('<%= product.imageURL %>')">
@@ -41,18 +41,17 @@
                     </div>
                     <div class="text-center">
                         <p class="first-card-p">Latest price</p>
-                        <p class="second-card-p">80 lei MDL</p>
+                        <p class="second-card-p"><%= product.lasPrice %></p>
                     </div>
                 </div>
             </a>
-            
             <% }); %>
-            <button title="sugereaza un nou produs" data-id="<%= category._id %>" class="card suggest-product product-card card-plus-sign m-0 d-flex flex-column">
-                <div class="card-img-top cards-images d-flex align-items-center justify-content-center">
-                    <img class="image-plus" src="/images/plus.svg" alt="">
-                </div>
-            </button>
         </div>
+        <div class="alert alert-info mt-4 text-center" role="alert">
+            Nu ai găsit produsul necesar?! Îl poți sugera aici:
+            <a href="javascript:void(0)" title="sugereaza un nou produs" data-id="<%= category._id %>" class="suggest-product font-weight-bold"> sugereaza noul produs
+            </a>
+          </div>
     </div>
 </section>
 <!-- The Modal -->
